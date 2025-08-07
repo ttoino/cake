@@ -1,9 +1,10 @@
-import Apps from "gi://AstalApps";
-import { dismissPopup } from "../services/windows";
-import { Astal, Gtk } from "ags/gtk4";
 import { createState, For } from "ags";
+import { Astal, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 import { execAsync } from "ags/process";
+import Apps from "gi://AstalApps";
+
+import { dismissPopup } from "../services/windows";
 
 const apps = new Apps.Apps();
 
@@ -32,18 +33,18 @@ export default function Run(props: Partial<JSX.IntrinsicElements["window"]>) {
 
     return (
         <window
-            name="run"
-            class="run-window"
             anchor={
                 Astal.WindowAnchor.BOTTOM |
                 Astal.WindowAnchor.LEFT |
                 Astal.WindowAnchor.RIGHT |
                 Astal.WindowAnchor.TOP
             }
-            layer={Astal.Layer.OVERLAY}
-            keymode={Astal.Keymode.EXCLUSIVE}
-            exclusivity={Astal.Exclusivity.IGNORE}
             application={app}
+            class="run-window"
+            exclusivity={Astal.Exclusivity.IGNORE}
+            keymode={Astal.Keymode.EXCLUSIVE}
+            layer={Astal.Layer.OVERLAY}
+            name="run"
             {...props}
             $={(self) => {
                 self.connect("notify::visible", () => {
@@ -56,24 +57,24 @@ export default function Run(props: Partial<JSX.IntrinsicElements["window"]>) {
                 props.$?.(self);
             }}
         >
-            <box valign={Gtk.Align.CENTER} halign={Gtk.Align.CENTER}>
+            <box halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER}>
                 <box
                     class="run-prompt"
-                    spacing={8}
                     orientation={Gtk.Orientation.VERTICAL}
+                    spacing={8}
                 >
                     <entry
+                        $={(self) => (entry = self)}
                         onNotifyText={({ text }) =>
                             setAppList(apps.fuzzy_query(text))
                         }
-                        $={(self) => (entry = self)}
                     />
                     <scrolledwindow
-                        vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
                         hscrollbarPolicy={Gtk.PolicyType.NEVER}
                         vexpand
+                        vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
                     >
-                        <box spacing={8} orientation={Gtk.Orientation.VERTICAL}>
+                        <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
                             <For each={appList}>
                                 {(app) => (
                                     <AppEntry app={app} close={dismissPopup} />

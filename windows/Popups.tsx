@@ -1,9 +1,10 @@
-import Notification from "../widgets/Notification";
-import Notifications from "../providers/notifications";
-import { ascending } from "../lib/sorting";
-import { Astal, Gtk } from "ags/gtk4";
 import { createBinding, For } from "ags";
+import { Astal, Gtk } from "ags/gtk4";
+
+import { ascending } from "../lib/sorting";
 import { accessor } from "../lib/vars";
+import Notifications from "../providers/notifications";
+import Notification from "../widgets/Notification";
 
 const notifications = Notifications.get_default();
 
@@ -22,14 +23,14 @@ export default function Popups(
 
     return (
         <window
+            anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
+            class={"popups"}
+            exclusivity={Astal.Exclusivity.EXCLUSIVE}
+            margin={16}
             name={accessor(props.gdkmonitor).as(
                 (monitor) =>
                     `popups-${monitor.model.replace(/\s/g, "-").toLowerCase()}`,
             )}
-            class={"popups"}
-            exclusivity={Astal.Exclusivity.EXCLUSIVE}
-            anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
-            margin={16}
             {...props}
         >
             <box hexpand orientation={Gtk.Orientation.VERTICAL} spacing={8}>

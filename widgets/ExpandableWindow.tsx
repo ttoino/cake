@@ -1,14 +1,15 @@
 import { createState } from "ags";
+import Gtk from "gi://Gtk?version=4.0";
+
 import { CHEVRON_LEFT, CHEVRON_RIGHT } from "../lib/chars";
 import IconButton from "./IconButton";
-import Gtk from "gi://Gtk?version=4.0";
 
 export interface ExpandableWindowProps
     extends Partial<Omit<JSX.IntrinsicElements["stack"], "children">> {
     collapsed: JSX.Element;
     expanded: (props: {
-        collapseButton: JSX.Element;
         $type: "named";
+        collapseButton: JSX.Element;
         name: "expanded";
     }) => JSX.Element;
 }
@@ -30,7 +31,7 @@ export default function ExpandableWindow({
             visibleChildName={visible}
             {...rest}
         >
-            <box name="collapsed" spacing={8} $type="named">
+            <box $type="named" name="collapsed" spacing={8}>
                 {collapsed}
                 <IconButton
                     class="expand"
@@ -41,7 +42,6 @@ export default function ExpandableWindow({
             </box>
 
             <Expanded
-                name="expanded"
                 $type="named"
                 collapseButton={
                     <IconButton
@@ -51,6 +51,7 @@ export default function ExpandableWindow({
                         {CHEVRON_LEFT}
                     </IconButton>
                 }
+                name="expanded"
             />
         </stack>
     );

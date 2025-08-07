@@ -42,7 +42,9 @@
     icon-slider {
         color: $bg-color;
 
-        trough, highlight, slider {
+        trough,
+        highlight,
+        slider {
             transition: background-color 0.3s;
         }
 

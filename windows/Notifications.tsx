@@ -1,11 +1,12 @@
-import { BELL, BELL_OFF, NOTIFICATION_CLEAR } from "../lib/chars";
-import Notification from "../widgets/Notification";
-import NotificationsProvider from "../providers/notifications";
-import IconButton from "../widgets/IconButton";
-import { ascending } from "../lib/sorting";
 import { createBinding, For } from "ags";
 import { Astal, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
+
+import { BELL, BELL_OFF, NOTIFICATION_CLEAR } from "../lib/chars";
+import { ascending } from "../lib/sorting";
+import NotificationsProvider from "../providers/notifications";
+import IconButton from "../widgets/IconButton";
+import Notification from "../widgets/Notification";
 
 const notifications = NotificationsProvider.get_default();
 
@@ -24,10 +25,10 @@ export default function Notifications(
 
     return (
         <window
-            name="notifications"
             anchor={Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT}
-            margin={16}
             application={app}
+            margin={16}
+            name="notifications"
             {...props}
         >
             <scrolledwindow
@@ -42,8 +43,8 @@ export default function Notifications(
                 >
                     <box spacing={8}>
                         <label
-                            hexpand
                             halign={Gtk.Align.START}
+                            hexpand
                             justify={Gtk.Justification.LEFT}
                             label="Notifications"
                         />
@@ -52,8 +53,8 @@ export default function Notifications(
                             onClicked={() => notifications.dismissAll()}
                         />
                         <togglebutton
-                            class="icon"
                             active={createBinding(notifications, "dnd")}
+                            class="icon"
                             label={createBinding(notifications, "dnd").as(
                                 (dnd) => (dnd ? BELL_OFF : BELL),
                             )}
@@ -76,10 +77,10 @@ export default function Notifications(
                         </For>
 
                         <label
+                            label="No notifications"
                             visible={notificationObjects.as(
                                 (v) => v.length === 0,
                             )}
-                            label="No notifications"
                         />
                     </box>
                 </box>

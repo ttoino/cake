@@ -1,29 +1,30 @@
-import Icon from "./Icon";
-import { accessor } from "../lib/vars";
-import { Accessor, createComputed, With } from "ags";
+import { Accessor, createComputed } from "ags";
 import { Gtk } from "ags/gtk4";
 
-export interface DeviceProps {
-    title?: string | Accessor<string | undefined>;
-    subtitle?: string | Accessor<string | undefined>;
-    icon?: string | Accessor<string | undefined>;
-    iconTooltip?: string | Accessor<string | undefined>;
-    active?: boolean | Accessor<boolean | undefined>;
-    activating?: boolean | Accessor<boolean | undefined>;
+import { accessor } from "../lib/vars";
+import Icon from "./Icon";
 
+export interface DeviceProps {
+    activating?: Accessor<boolean | undefined> | boolean;
+    active?: Accessor<boolean | undefined> | boolean;
+    icon?: Accessor<string | undefined> | string;
+    iconTooltip?: Accessor<string | undefined> | string;
     onPrimaryClick?(): void;
     onSecondaryClick?(): void;
+
+    subtitle?: Accessor<string | undefined> | string;
+    title?: Accessor<string | undefined> | string;
 }
 
 export default function Device({
-    title,
-    subtitle,
+    activating,
+    active,
     icon,
     iconTooltip,
-    active,
-    activating,
     onPrimaryClick = () => {},
     onSecondaryClick = () => {},
+    subtitle,
+    title,
 }: DeviceProps) {
     const titleB = accessor(title);
     const subtitleB = accessor(subtitle);
@@ -44,29 +45,29 @@ export default function Device({
             <Gtk.GestureClick button={3} onPressed={onSecondaryClick} />
 
             <Icon
-                visible={iconB.as((icon) => !!icon)}
                 label={iconB.as((icon) => icon ?? "")}
                 tooltipText={iconTooltipB.as((tooltip) => tooltip ?? "")}
+                visible={iconB.as((icon) => !!icon)}
             />
             <box
                 orientation={Gtk.Orientation.VERTICAL}
                 valign={Gtk.Align.CENTER}
             >
                 <label
-                    visible={titleB.as((title) => !!title)}
-                    label={titleB.as((title) => title ?? "")}
                     halign={Gtk.Align.START}
                     hexpand
+                    label={titleB.as((title) => title ?? "")}
                     lines={1}
+                    visible={titleB.as((title) => !!title)}
                     wrap={false}
                 />
                 <label
-                    visible={subtitleB.as((subtitle) => !!subtitle)}
-                    label={subtitleB.as((subtitle) => subtitle ?? "")}
                     class="secondary"
                     halign={Gtk.Align.START}
                     hexpand
+                    label={subtitleB.as((subtitle) => subtitle ?? "")}
                     lines={1}
+                    visible={subtitleB.as((subtitle) => !!subtitle)}
                     wrap={false}
                 />
             </box>

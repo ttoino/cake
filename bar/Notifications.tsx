@@ -1,8 +1,9 @@
+import { createBinding, createComputed } from "ags";
+
 import { BELL, BELL_BADGE, BELL_OFF } from "../lib/chars";
-import IconButton from "../widgets/IconButton";
-import { togglePopup } from "../services/windows";
 import NotificationsProvider from "../providers/notifications";
-import { createBinding, createComputed, createState } from "ags";
+import { togglePopup } from "../services/windows";
+import IconButton from "../widgets/IconButton";
 
 const notifications = NotificationsProvider.get_default();
 
@@ -28,9 +29,9 @@ export default function Notifications() {
     return (
         <IconButton
             class="notifications"
-            tooltipText={tooltip}
-            onClicked={() => togglePopup("notifications")}
             label={icon}
+            onClicked={() => togglePopup("notifications")}
+            tooltipText={tooltip}
         />
     );
 }

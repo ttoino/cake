@@ -1,4 +1,5 @@
 import Mpris from "gi://AstalMpris";
+
 import { notify } from "../../lib/notifications";
 
 const mpris = Mpris.get_default();
@@ -8,12 +9,12 @@ let mediaId: string | undefined;
 const onPlayerAdded = (player: Mpris.Player) => {
     const callback = async () => {
         const out = await notify({
-            title: player.title,
-            body: player.artist,
             appName: player.identity,
-            image: player.coverArt,
+            body: player.artist,
             className: `player-${player.busName}`,
             id: mediaId,
+            image: player.coverArt,
+            title: player.title,
             transient: true,
         });
 

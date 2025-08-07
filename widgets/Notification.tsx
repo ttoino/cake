@@ -1,12 +1,13 @@
+import { Gtk } from "ags/gtk4";
+
+import { CLOSE } from "../lib/chars";
 import { urgencyToString } from "../lib/notifications";
 import { relativeTime } from "../lib/time";
 import date from "../providers/date";
+import { Notification as NotificationObject } from "../providers/notifications";
+import IconButton from "./IconButton";
 import IconSlider from "./IconSlider";
 import ScrollText from "./ScrollText";
-import IconButton from "./IconButton";
-import { CLOSE } from "../lib/chars";
-import { Notification as NotificationObject } from "../providers/notifications";
-import { Gtk } from "ags/gtk4";
 
 const NotificationHeader = (
     notification: NotificationObject,
@@ -14,13 +15,13 @@ const NotificationHeader = (
     popup: boolean,
 ) =>
     !notification.hideHeader && (
-        <box class="notification-app" vexpand hexpand spacing={4}>
+        <box class="notification-app" hexpand spacing={4} vexpand>
             {notification.appIcon && <image iconName={notification.appIcon} />}
             {notification.appName && (
                 <label
-                    label={notification.appName}
                     halign={Gtk.Align.START}
                     hexpand
+                    label={notification.appName}
                     lines={1}
                     wrap={false}
                 />
@@ -28,23 +29,23 @@ const NotificationHeader = (
             {!popup && (
                 <>
                     <label
+                        halign={Gtk.Align.END}
+                        hexpand
                         label={date.as((date) =>
                             relativeTime(
                                 new Date(notification.time * 1000),
                                 date.date,
                             ),
                         )}
-                        tooltipText={new Date(notification.time).toString()}
-                        halign={Gtk.Align.END}
-                        hexpand
                         lines={1}
+                        tooltipText={new Date(notification.time).toString()}
                         wrap={false}
                     />
                     <IconButton
+                        class="sm"
                         label={CLOSE}
                         onClicked={onDismiss}
                         tooltipText="Dismiss"
-                        class="sm"
                     />
                 </>
             )}
@@ -53,35 +54,35 @@ const NotificationHeader = (
 
 const NotificationBody = (notification: NotificationObject) =>
     !notification.hideBody && (
-        <box class="notification-body" vexpand hexpand spacing={8}>
+        <box class="notification-body" hexpand spacing={8} vexpand>
             {notification.image && (
                 <box
                     class="notification-image"
-                    valign={Gtk.Align.START}
                     css={`
                         background-image: url("${notification.image}");
                     `}
+                    valign={Gtk.Align.START}
                 />
             )}
             <box
-                orientation={Gtk.Orientation.VERTICAL}
-                vexpand
                 hexpand
+                orientation={Gtk.Orientation.VERTICAL}
                 spacing={8}
+                vexpand
             >
                 {notification.summary && (
                     <ScrollText
-                        labelProps={{ halign: Gtk.Align.START }}
                         label={notification.summary}
+                        labelProps={{ halign: Gtk.Align.START }}
                     />
                 )}
                 {notification.body && (
                     <label
                         halign={Gtk.Align.START}
                         hexpand
+                        label={notification.body}
                         lines={4}
                         wrap
-                        label={notification.body}
                     />
                 )}
             </box>
@@ -97,21 +98,21 @@ const NotificationSlider = (notification: NotificationObject) => {
     return icon && icon.length > 0 ? (
         <IconSlider
             drawValue={false}
-            sensitive={false}
-            min={0}
-            max={100}
-            value={value}
-            icon={icon}
             hexpand
+            icon={icon}
+            max={100}
+            min={0}
+            sensitive={false}
+            value={value}
         />
     ) : (
         <slider
             drawValue={false}
-            sensitive={false}
-            min={0}
-            max={100}
-            value={value}
             hexpand
+            max={100}
+            min={0}
+            sensitive={false}
+            value={value}
         />
     );
 };
@@ -139,10 +140,10 @@ export default function Notification(
     return (
         <box
             class={`${notification.className} ${urgencyToString[notification.urgency]} notification`}
-            orientation={Gtk.Orientation.VERTICAL}
-            valign={Gtk.Align.START}
             hexpand
+            orientation={Gtk.Orientation.VERTICAL}
             spacing={8}
+            valign={Gtk.Align.START}
         >
             {NotificationHeader(notification, onDismiss, popup)}
             {NotificationBody(notification)}

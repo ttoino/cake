@@ -1,9 +1,10 @@
+import { createBinding, createComputed } from "ags";
 import BatteryService from "gi://AstalBattery";
+
 import { SEPARATOR } from "../lib/chars";
 import { batteryRange } from "../lib/icons";
-import IconButton from "../widgets/IconButton";
 import { togglePopup } from "../services/windows";
-import { createBinding, createComputed } from "ags";
+import IconButton from "../widgets/IconButton";
 
 const battery = BatteryService.get_default();
 
@@ -26,9 +27,9 @@ export default function Battery() {
     return (
         <IconButton
             class="battery"
-            tooltipText={tooltip}
-            onClicked={() => togglePopup("battery")}
             label={icon}
+            onClicked={() => togglePopup("battery")}
+            tooltipText={tooltip}
         />
     );
 }

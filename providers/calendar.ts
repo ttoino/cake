@@ -6,11 +6,6 @@ import GObject from "gi://GObject?version=2.0";
 @register()
 export default class Calendar extends GObject.Object {
     static instance: Calendar;
-    static get_default(): Calendar {
-        if (!this.instance) this.instance = new Calendar();
-        return this.instance;
-    }
-
     private _events: Map<string, Event> = new Map();
 
     constructor() {
@@ -36,19 +31,19 @@ export default class Calendar extends GObject.Object {
                         if (!event) continue;
 
                         const {
-                            uid,
-                            title,
                             description,
+                            end,
                             location,
                             start,
-                            end,
+                            title,
+                            uid,
                         }: {
-                            uid: string;
-                            title: string;
                             description: string;
+                            end: string;
                             location: string;
                             start: string;
-                            end: string;
+                            title: string;
+                            uid: string;
                         } = JSON.parse(event);
                         const allDay = !start.includes("T");
 
@@ -77,14 +72,21 @@ export default class Calendar extends GObject.Object {
         );
     }
 
+    static get_default(): Calendar {
+        if (!this.instance) this.instance = new Calendar();
+        return this.instance;
+    }
+
     @signal([String], undefined, {
         default: false,
     })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     eventAdded(id: string) {}
 
     @signal([String], undefined, {
         default: false,
     })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     eventRemoved(id: string) {}
 }
 

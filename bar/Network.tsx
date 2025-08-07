@@ -1,9 +1,10 @@
-import NetworkService from "gi://AstalNetwork";
-import { ETHERNET, SEPARATOR, WEB_OFF } from "../lib/chars";
-import { wifiRange } from "../lib/icons";
-import IconButton from "../widgets/IconButton";
-import { togglePopup } from "../services/windows";
 import { createBinding, createComputed } from "ags";
+import NetworkService from "gi://AstalNetwork";
+
+import { SEPARATOR, WEB_OFF } from "../lib/chars";
+import { wifiRange } from "../lib/icons";
+import { togglePopup } from "../services/windows";
+import IconButton from "../widgets/IconButton";
 
 const network = NetworkService.get_default();
 
@@ -57,9 +58,9 @@ export default function Network() {
     return (
         <IconButton
             class="network"
-            tooltipText={tooltip}
-            onClicked={() => togglePopup("network")}
             label={icons}
+            onClicked={() => togglePopup("network")}
+            tooltipText={tooltip}
         />
     );
 }

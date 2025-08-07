@@ -11,22 +11,43 @@ const batteryChargeLimitPath =
 @register()
 export default class Framework extends GObject.Object {
     static instance: Framework;
-    static get_default(): Framework {
-        if (!this.instance) this.instance = new Framework();
-        return this.instance;
+    @getter(Number)
+    get batteryChargeLimit() {
+        return this.#batteryChargeLimit;
     }
-
-    #cameraDisabled: boolean = false;
-    #microphoneDisabled: boolean = false;
 
     @getter(Boolean)
     get cameraDisabled() {
         return this.#cameraDisabled;
     }
-
     @getter(Boolean)
     get microphoneDisabled() {
         return this.#microphoneDisabled;
+    }
+
+    #batteryChargeLimit: number = 0;
+
+    #cameraDisabled: boolean = false;
+
+    #microphoneDisabled: boolean = false;
+
+    constructor() {
+        super();
+
+        this.#updatePrivacy();
+        monitorFile(privacyPath, this.#updatePrivacy);
+
+        this.#updateBatteryChargeLimit();
+        monitorFile(batteryChargeLimitPath, this.#updateBatteryChargeLimit);
+    }
+
+    static get_default(): Framework {
+        if (!this.instance) this.instance = new Framework();
+        return this.instance;
+    }
+
+    #updateBatteryChargeLimit() {
+        this.#batteryChargeLimit = parseInt(readFile(batteryChargeLimitPath));
     }
 
     #updatePrivacy() {
@@ -38,26 +59,5 @@ export default class Framework extends GObject.Object {
             if (device.toLowerCase() === "microphone")
                 this.#microphoneDisabled = state.toLowerCase() === "muted";
         });
-    }
-
-    #batteryChargeLimit: number = 0;
-
-    @getter(Number)
-    get batteryChargeLimit() {
-        return this.#batteryChargeLimit;
-    }
-
-    #updateBatteryChargeLimit() {
-        this.#batteryChargeLimit = parseInt(readFile(batteryChargeLimitPath));
-    }
-
-    constructor() {
-        super();
-
-        this.#updatePrivacy();
-        monitorFile(privacyPath, this.#updatePrivacy);
-
-        this.#updateBatteryChargeLimit();
-        monitorFile(batteryChargeLimitPath, this.#updateBatteryChargeLimit);
     }
 }

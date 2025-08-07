@@ -20,7 +20,7 @@ export default function ScrollText({
             vscrollbarPolicy={Gtk.PolicyType.NEVER}
             {...rest}
         >
-            <label wrap={false} lines={1} label={label} {...labelProps} />
+            <label label={label} lines={1} wrap={false} {...labelProps} />
         </scrolledwindow>
     );
 }

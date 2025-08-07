@@ -1,9 +1,10 @@
+import { createBinding, createComputed } from "ags";
 import Wp from "gi://AstalWp";
+
 import { SEPARATOR, VOLUME_MUTE } from "../lib/chars";
 import { volumeRange } from "../lib/icons";
-import IconButton from "../widgets/IconButton";
 import { togglePopup } from "../services/windows";
-import { createBinding, createComputed } from "ags";
+import IconButton from "../widgets/IconButton";
 
 const audio = Wp.get_default();
 
@@ -39,9 +40,9 @@ export default function Audio() {
     return (
         <IconButton
             class="audio"
-            tooltipText={tooltip}
-            onClicked={() => togglePopup("audio")}
             label={icon}
+            onClicked={() => togglePopup("audio")}
+            tooltipText={tooltip}
         />
     );
 }

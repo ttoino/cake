@@ -1,13 +1,14 @@
+import { createBinding, createComputed } from "ags";
 import BluetoothService from "gi://AstalBluetooth";
+
 import {
     BLUETOOTH,
     BLUETOOTH_CONNECT,
     BLUETOOTH_OFF,
     SEPARATOR,
 } from "../lib/chars";
-import IconButton from "../widgets/IconButton";
 import { togglePopup } from "../services/windows";
-import { createBinding, createComputed } from "ags";
+import IconButton from "../widgets/IconButton";
 
 const bluetooth = BluetoothService.get_default();
 
@@ -37,9 +38,9 @@ export default function Bluetooth() {
     return (
         <IconButton
             class="bluetooth"
-            tooltipText={tooltip}
-            onClicked={() => togglePopup("bluetooth")}
             label={icon}
+            onClicked={() => togglePopup("bluetooth")}
+            tooltipText={tooltip}
         />
     );
 }

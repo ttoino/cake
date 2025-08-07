@@ -1,14 +1,14 @@
 import { createPoll } from "ags/time";
 
 const FORMATTER = new Intl.DateTimeFormat([], {
-    year: "2-digit",
-    month: "numeric",
     day: "numeric",
-    weekday: "short",
     hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
     hour12: false,
+    minute: "numeric",
+    month: "numeric",
+    second: "numeric",
+    weekday: "short",
+    year: "2-digit",
 });
 
 const dateObject = () => {
@@ -16,18 +16,18 @@ const dateObject = () => {
     const parts = FORMATTER.formatToParts(date);
     const ret = {
         date,
-        year: "",
-        month: "",
         day: "",
-        weekday: "",
         hour: "",
         minute: "",
+        month: "",
         second: "",
+        weekday: "",
+        year: "",
     };
 
     for (const part of parts)
         if (part.type in ret)
-            ret[part.type as typeof part.type & keyof typeof ret] = part.value;
+            ret[part.type as keyof typeof ret & typeof part.type] = part.value;
 
     return ret;
 };

@@ -1,11 +1,12 @@
+import { createBinding, createComputed } from "ags";
+import { Astal, Gtk } from "ags/gtk4";
+import app from "ags/gtk4/app";
 import BatteryService from "gi://AstalBattery";
 import PowerProfiles from "gi://AstalPowerProfiles";
+
 import { batteryRange } from "../lib/icons";
 import ExpandableWindow from "../widgets/ExpandableWindow";
 import IconSlider from "../widgets/IconSlider";
-import { Astal, Gtk } from "ags/gtk4";
-import app from "ags/gtk4/app";
-import { createBinding, createComputed } from "ags";
 
 const battery = BatteryService.get_default();
 const powerProfiles = PowerProfiles.get_default();
@@ -17,10 +18,10 @@ const icon = createComputed(
 
 const BatterySlider = () => (
     <IconSlider
-        hexpand
         drawValue={false}
-        sensitive={false}
+        hexpand
         icon={icon}
+        sensitive={false}
         value={createBinding(battery, "percentage")}
     />
 );
@@ -30,18 +31,18 @@ export default function Battery(
 ) {
     return (
         <window
-            name="battery"
             anchor={Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT}
-            margin={16}
             application={app}
+            margin={16}
+            name="battery"
             {...props}
         >
             <ExpandableWindow
                 collapsed={<BatterySlider />}
-                expanded={({collapseButton, ...props}) => (
+                expanded={({ collapseButton, ...props }) => (
                     <scrolledwindow
-                        vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
                         hscrollbarPolicy={Gtk.PolicyType.NEVER}
+                        vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
                         {...props}
                     >
                         <box
@@ -51,13 +52,13 @@ export default function Battery(
                             <box spacing={16}>
                                 {collapseButton}
                                 <label
-                                    hexpand
                                     halign={Gtk.Align.START}
+                                    hexpand
                                     justify={Gtk.Justification.LEFT}
                                     label="Battery"
                                 />
                             </box>
-                            <box homogeneous hexpand>
+                            <box hexpand homogeneous>
                                 {powerProfiles.get_profiles().map((profile) => (
                                     <togglebutton
                                         active={createBinding(

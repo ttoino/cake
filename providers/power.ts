@@ -10,23 +10,23 @@ export default class Power extends GObject.Object {
         return this.instance;
     }
 
-    shutdown() {
-        exec("shutdown now");
-    }
-
-    restart() {
-        exec("reboot");
-    }
-
-    sleep() {
-        exec("systemctl suspend");
-    }
-
     hibernate() {
         exec("systemctl hibernate");
     }
 
     lock() {
         exec("loginctl lock-session");
+    }
+
+    restart() {
+        exec("reboot");
+    }
+
+    shutdown() {
+        exec("shutdown now");
+    }
+
+    sleep() {
+        exec("systemctl suspend");
     }
 }

@@ -1,21 +1,22 @@
+import { createBinding, createComputed, createState, For } from "ags";
+import { Astal, Gtk } from "ags/gtk4";
+import app from "ags/gtk4/app";
 import Mpris from "gi://AstalMpris";
+
 import { PAUSE, PLAY, SKIP_NEXT, SKIP_PREVIOUS } from "../lib/chars";
+import { ascending } from "../lib/sorting";
 import IconButton from "../widgets/IconButton";
 import ScrollText from "../widgets/ScrollText";
-import { ascending } from "../lib/sorting";
-import { Astal, Gtk } from "ags/gtk4";
-import { createBinding, createComputed, createState, For } from "ags";
-import app from "ags/gtk4/app";
 
 const mpris = Mpris.get_default();
 
 const Player = (player: Mpris.Player, onChoose: () => void) => (
     // Can't bind to busName because the widget name should not change
     <box
+        $type="named"
         name={player.busName}
         orientation={Gtk.Orientation.VERTICAL}
         spacing={8}
-        $type="named"
     >
         <button onClicked={onChoose}>
             <ScrollText
@@ -30,10 +31,10 @@ const Player = (player: Mpris.Player, onChoose: () => void) => (
         </button>
         <box
             class="cover"
-            visible={createBinding(player, "coverArt").as((image) => !!image)}
             css={createBinding(player, "coverArt").as(
                 (image) => `background-image: url("${image}")`,
             )}
+            visible={createBinding(player, "coverArt").as((image) => !!image)}
         />
         <box orientation={Gtk.Orientation.VERTICAL}>
             <ScrollText class="title" label={createBinding(player, "title")} />
@@ -43,12 +44,12 @@ const Player = (player: Mpris.Player, onChoose: () => void) => (
                 visible={createBinding(player, "artist").as((a) => !!a)}
             />
         </box>
-        <box spacing={16} halign={Gtk.Align.CENTER}>
+        <box halign={Gtk.Align.CENTER} spacing={16}>
             <IconButton
                 class="lg"
                 label={SKIP_PREVIOUS}
-                valign={Gtk.Align.CENTER}
                 onClicked={() => player.previous()}
+                valign={Gtk.Align.CENTER}
             />
             <IconButton
                 class="xl"
@@ -60,15 +61,15 @@ const Player = (player: Mpris.Player, onChoose: () => void) => (
             <IconButton
                 class="lg"
                 label={SKIP_NEXT}
-                valign={Gtk.Align.CENTER}
                 onClicked={() => player.next()}
+                valign={Gtk.Align.CENTER}
             />
         </box>
         <slider
-            value={createBinding(player, "position")}
             max={createBinding(player, "length")}
-            visible={createBinding(player, "length").as((v) => v > 0)}
             onNotifyValue={({ value }) => player.set_position(value)}
+            value={createBinding(player, "position")}
+            visible={createBinding(player, "length").as((v) => v > 0)}
         />
     </box>
 );
@@ -86,10 +87,10 @@ export default function Media(props: Partial<JSX.IntrinsicElements["window"]>) {
 
     return (
         <window
-            name="media"
             anchor={Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT}
-            margin={16}
             application={app}
+            margin={16}
+            name="media"
             {...props}
         >
             <stack
@@ -98,10 +99,10 @@ export default function Media(props: Partial<JSX.IntrinsicElements["window"]>) {
                 visibleChildName={visible}
             >
                 <box
+                    $type="named"
                     name="_choose"
                     orientation={Gtk.Orientation.VERTICAL}
                     spacing={8}
-                    $type="named"
                 >
                     <label label="Choose a player" />
                     <For each={players}>

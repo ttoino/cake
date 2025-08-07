@@ -1,8 +1,8 @@
 import { Astal, Gdk, Gtk } from "ags/gtk4";
-import { dismissPopup } from "../services/windows";
 import app from "ags/gtk4/app";
-import { Accessor } from "ags";
+
 import { accessor } from "../lib/vars";
+import { dismissPopup } from "../services/windows";
 
 export default function Dismisser(
     props: Partial<Omit<JSX.IntrinsicElements["window"], "gdkmonitor">> &
@@ -10,21 +10,21 @@ export default function Dismisser(
 ) {
     return (
         <window
-            name={accessor(props.gdkmonitor).as(
-                (monitor) => `dismisser-${monitor.model}`,
-            )}
-            namespace="ags-dismisser"
-            class="dismisser-window"
             anchor={
                 Astal.WindowAnchor.BOTTOM |
                 Astal.WindowAnchor.LEFT |
                 Astal.WindowAnchor.RIGHT |
                 Astal.WindowAnchor.TOP
             }
-            layer={Astal.Layer.TOP}
-            keymode={Astal.Keymode.EXCLUSIVE}
-            exclusivity={Astal.Exclusivity.IGNORE}
             application={app}
+            class="dismisser-window"
+            exclusivity={Astal.Exclusivity.IGNORE}
+            keymode={Astal.Keymode.EXCLUSIVE}
+            layer={Astal.Layer.TOP}
+            name={accessor(props.gdkmonitor).as(
+                (monitor) => `dismisser-${monitor.model}`,
+            )}
+            namespace="ags-dismisser"
             {...props}
         >
             <Gtk.GestureClick onPressed={() => dismissPopup()} />

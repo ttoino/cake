@@ -10,9 +10,9 @@ const label = date.as(
 export default function Clock() {
     return (
         <button
+            label={label}
             name="clock"
             onClicked={() => togglePopup("calendar")}
-            label={label}
         />
     );
 }

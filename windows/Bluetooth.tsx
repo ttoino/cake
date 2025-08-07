@@ -1,4 +1,8 @@
+import { createBinding, For } from "ags";
+import { Astal, Gtk } from "ags/gtk4";
+import app from "ags/gtk4/app";
 import BluetoothService from "gi://AstalBluetooth";
+
 import {
     BLUETOOTH,
     CAMERA,
@@ -14,18 +18,15 @@ import {
     SPEAKER,
     VIDEO,
 } from "../lib/chars";
-import BaseDevice from "../widgets/Device";
 import { ascending, descending } from "../lib/sorting";
-import { createBinding, For } from "ags";
-import { Astal, Gtk } from "ags/gtk4";
-import app from "ags/gtk4/app";
+import BaseDevice from "../widgets/Device";
 
 const bluetooth = BluetoothService.get_default();
 
 const ICONS = {
-    "audio-speakers": SPEAKER,
-    "audio-headset": HEADSET,
     "audio-headphones": HEADPHONES,
+    "audio-headset": HEADSET,
+    "audio-speakers": SPEAKER,
     "camera-photo": CAMERA,
     "camera-video": VIDEO,
     computer: LAPTOP,
@@ -40,21 +41,21 @@ const ICONS = {
 
 const Device = (device: BluetoothService.Device) => (
     <BaseDevice
-        title={createBinding(device, "name")}
-        subtitle={createBinding(device, "address")}
+        activating={createBinding(device, "connecting")}
+        active={createBinding(device, "connected")}
         icon={createBinding(device, "icon").as((icon_name) =>
             icon_name in ICONS
                 ? ICONS[icon_name as keyof typeof ICONS]
                 : BLUETOOTH,
         )}
         iconTooltip={createBinding(device, "icon")}
-        active={createBinding(device, "connected")}
-        activating={createBinding(device, "connecting")}
         onPrimaryClick={() =>
             device.connected
                 ? device.disconnect_device(null)
                 : device.connect_device(null)
         }
+        subtitle={createBinding(device, "address")}
+        title={createBinding(device, "name")}
     />
 );
 
@@ -72,10 +73,10 @@ export default function Bluetooth(
 
     return (
         <window
-            name="bluetooth"
             anchor={Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT}
-            margin={16}
             application={app}
+            margin={16}
+            name="bluetooth"
             {...props}
         >
             <scrolledwindow
@@ -86,14 +87,14 @@ export default function Bluetooth(
                 <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
                     <box spacing={16}>
                         <label
-                            hexpand
                             halign={Gtk.Align.START}
+                            hexpand
                             justify={Gtk.Justification.LEFT}
                             label="Bluetooth"
                         />
                         <switch
-                            hexpand={false}
                             active={createBinding(bluetooth, "isPowered")}
+                            hexpand={false}
                             onStateSet={(self) =>
                                 self.state === bluetooth.isPowered &&
                                 bluetooth.toggle()

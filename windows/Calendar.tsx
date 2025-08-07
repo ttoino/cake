@@ -6,17 +6,17 @@ export default function Calendar(
 ) {
     return (
         <window
-            name="calendar"
             anchor={Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT}
-            margin={16}
-            visible={false}
             application={app}
+            margin={16}
+            name="calendar"
+            visible={false}
             {...props}
         >
             <scrolledwindow
                 class="calendar-window info-window"
-                vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
                 hscrollbarPolicy={Gtk.PolicyType.NEVER}
+                vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
             >
                 <box orientation={Gtk.Orientation.VERTICAL} spacing={16}>
                     <Gtk.Calendar hexpand vexpand />

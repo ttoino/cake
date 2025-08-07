@@ -1,3 +1,7 @@
+import { createBinding, createState, For } from "ags";
+import { Astal, Gtk } from "ags/gtk4";
+import app from "ags/gtk4/app";
+
 import Audio from "../windows/Audio";
 import Bar from "../windows/Bar";
 import Battery from "../windows/Battery";
@@ -7,14 +11,11 @@ import Calendar from "../windows/Calendar";
 import Dismisser from "../windows/Dismisser";
 import Media from "../windows/Media";
 import Network from "../windows/Network";
+import Notifications from "../windows/Notifications";
 import Popups from "../windows/Popups";
 import Power from "../windows/Power";
 import Run from "../windows/Run";
 import Scrim from "../windows/Scrim";
-import Notifications from "../windows/Notifications";
-import { createBinding, createComputed, createState, For } from "ags";
-import app from "ags/gtk4/app";
-import { Astal, Gdk, Gtk } from "ags/gtk4";
 
 const WINDOWS = [Bar, Popups] as const;
 
@@ -33,7 +34,7 @@ const SCRIMMED_POPUP_WINDOWS = [Power, Run] as const;
 
 const scrimmedPopups = new Set<string>();
 
-const [visible, setVisible] = createState<string | null>(null);
+const [visible, setVisible] = createState<null | string>(null);
 const dismisserVisible = visible.as((v) => !!v);
 const scrimVisible = visible.as((v) => !!v && scrimmedPopups.has(v));
 
@@ -58,9 +59,9 @@ const tryRender =
             console.error(e.stack);
             return (
                 <window
-                anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT}
-                    visible
+                    anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT}
                     application={app}
+                    visible
                     {...props}
                 >
                     <label label={`Error rendering window: ${e}`} />
@@ -72,7 +73,7 @@ const tryRender =
 export const init = () => {
     const monitors = createBinding(app, "monitors");
 
-    <For each={monitors} cleanup={(win) => (win as Gtk.Window).destroy()}>
+    <For cleanup={(win) => (win as Gtk.Window).destroy()} each={monitors}>
         {(monitor) =>
             tryRender(Dismisser)({
                 gdkmonitor: monitor,
@@ -81,7 +82,7 @@ export const init = () => {
         }
     </For>;
 
-    <For each={monitors} cleanup={(win) => (win as Gtk.Window).destroy()}>
+    <For cleanup={(win) => (win as Gtk.Window).destroy()} each={monitors}>
         {(monitor) =>
             tryRender(Scrim)({
                 gdkmonitor: monitor,
@@ -91,7 +92,7 @@ export const init = () => {
     </For>;
 
     WINDOWS.map((Window) => (
-        <For each={monitors} cleanup={(win) => (win as Gtk.Window)?.destroy()}>
+        <For cleanup={(win) => (win as Gtk.Window)?.destroy()} each={monitors}>
             {(monitor) =>
                 tryRender(Window)({
                     gdkmonitor: monitor,
@@ -111,9 +112,6 @@ export const init = () => {
             let window: Gtk.Window;
 
             return tryRender(Window)({
-                visible: visible.as(
-                    (v) => (window && v === window.name) ?? false,
-                ),
                 $: (w) => {
                     window = w;
 
@@ -125,6 +123,9 @@ export const init = () => {
                             setVisible(null);
                     });
                 },
+                visible: visible.as(
+                    (v) => (window && v === window.name) ?? false,
+                ),
             });
         };
 

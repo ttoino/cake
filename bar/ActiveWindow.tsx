@@ -1,4 +1,7 @@
+import { createBinding, With } from "ags";
 import Hyprland from "gi://AstalHyprland";
+import Pango from "gi://Pango?version=1.0";
+
 import {
     ALPHA_X_CIRCLE,
     FULLSCREEN,
@@ -7,8 +10,6 @@ import {
     WINDOW_RESTORE,
 } from "../lib/chars";
 import Icon from "../widgets/Icon";
-import { createBinding, With } from "ags";
-import Pango from "gi://Pango?version=1.0";
 
 const hyprland = Hyprland.get_default();
 
@@ -21,8 +22,8 @@ export default function ActiveWindow() {
                 {(client) => (
                     <label
                         ellipsize={Pango.EllipsizeMode.END}
-                        visible={!!client}
                         label={client && createBinding(client, "title")}
+                        visible={!!client}
                     />
                 )}
             </With>
@@ -30,8 +31,8 @@ export default function ActiveWindow() {
             <With value={client}>
                 {(client) => (
                     <Icon
-                        visible={client && createBinding(client, "floating")}
                         label={WINDOW_RESTORE}
+                        visible={client && createBinding(client, "floating")}
                     />
                 )}
             </With>
@@ -39,13 +40,13 @@ export default function ActiveWindow() {
             <With value={client}>
                 {(client) => (
                     <Icon
+                        label={FULLSCREEN_EXIT}
                         visible={
                             client &&
                             createBinding(client, "fullscreen").as(
                                 (it) => !!(it & Hyprland.Fullscreen.MAXIMIZED),
                             )
                         }
-                        label={FULLSCREEN_EXIT}
                     />
                 )}
             </With>
@@ -53,13 +54,13 @@ export default function ActiveWindow() {
             <With value={client}>
                 {(client) => (
                     <Icon
+                        label={FULLSCREEN}
                         visible={
                             client &&
                             createBinding(client, "fullscreen").as(
                                 (it) => !!(it & Hyprland.Fullscreen.FULLSCREEN),
                             )
                         }
-                        label={FULLSCREEN}
                     />
                 )}
             </With>
@@ -67,8 +68,8 @@ export default function ActiveWindow() {
             <With value={client}>
                 {(client) => (
                     <Icon
-                        visible={client && createBinding(client, "xwayland")}
                         label={ALPHA_X_CIRCLE}
+                        visible={client && createBinding(client, "xwayland")}
                     />
                 )}
             </With>
@@ -76,8 +77,8 @@ export default function ActiveWindow() {
             <With value={client}>
                 {(client) => (
                     <Icon
-                        visible={client && createBinding(client, "pinned")}
                         label={PIN}
+                        visible={client && createBinding(client, "pinned")}
                     />
                 )}
             </With>

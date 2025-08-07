@@ -1,5 +1,6 @@
 import app from "ags/gtk4/app";
 import Wp from "gi://AstalWp";
+
 import { volumeRange } from "../../lib/icons";
 import { notify } from "../../lib/notifications";
 
@@ -12,15 +13,15 @@ audio?.defaultSpeaker.connect(
         if (app.get_window("audio")?.visible) return;
 
         const out = await notify({
-            title: "Volume",
-            slider: {
-                value: speaker.volume * 100,
-                icon: volumeRange(speaker.volume),
-            },
             className: "audio round",
-            id: speakerId,
             hideBody: true,
             hideHeader: true,
+            id: speakerId,
+            slider: {
+                icon: volumeRange(speaker.volume),
+                value: speaker.volume * 100,
+            },
+            title: "Volume",
             transient: true,
         });
 

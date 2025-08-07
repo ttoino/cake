@@ -1,4 +1,5 @@
 import app from "ags/gtk4/app";
+
 import "./services/notifications";
 import * as windows from "./services/windows";
 import style from "./style/main.scss";
@@ -13,21 +14,22 @@ app.start({
         const [action, ...params] = args;
 
         switch (action.toLowerCase()) {
-            case "popup":
+            case "popup": {
                 const [subaction, ...popup] = params;
 
                 switch (subaction.toLowerCase()) {
+                    case "dismiss":
+                        windows.dismissPopup();
+                        return res("Dismissed popups");
                     case "show":
                         windows.showPopup(popup.join(" "));
                         return res(`Showed ${popup.join(" ")}`);
                     case "toggle":
                         windows.togglePopup(popup.join(" "));
                         return res(`Toggled ${popup.join(" ")}`);
-                    case "dismiss":
-                        windows.dismissPopup();
-                        return res("Dismissed popups");
                 }
                 return res("Invalid popup action");
+            }
         }
 
         res("Invalid action");

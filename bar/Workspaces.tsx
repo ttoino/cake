@@ -1,11 +1,12 @@
+import { createBinding, createComputed, For } from "ags";
 import Hyprland from "gi://AstalHyprland";
+
 import {
     RADIOBOX_BLANK,
     RADIOBOX_INDETERMINATE,
     RADIOBOX_MARKED,
 } from "../lib/chars";
 import IconButton from "../widgets/IconButton";
-import { createBinding, createComputed, For } from "ags";
 
 const hyprland = Hyprland.get_default();
 
@@ -31,9 +32,6 @@ export default function Workspaces() {
             <For each={workspaces}>
                 {(ws) => (
                     <IconButton
-                        onClicked={() =>
-                            hyprland.dispatch("workspace", ws.id.toString())
-                        }
                         label={createComputed(
                             [
                                 createBinding(hyprland, "focusedWorkspace"),
@@ -46,6 +44,9 @@ export default function Workspaces() {
                                       ? RADIOBOX_INDETERMINATE
                                       : RADIOBOX_BLANK,
                         )}
+                        onClicked={() =>
+                            hyprland.dispatch("workspace", ws.id.toString())
+                        }
                     />
                 )}
             </For>

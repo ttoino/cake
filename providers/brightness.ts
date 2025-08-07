@@ -8,14 +8,6 @@ const get = (args: string) => exec(`brightnessctl -m ${args}`);
 @register()
 export default class Brightness extends GObject.Object {
     static instance: Brightness;
-    static get_default(): Brightness {
-        if (!this.instance) this.instance = new Brightness();
-        return this.instance;
-    }
-
-    #value: number;
-    #max: number;
-
     @getter(Number)
     get percentage() {
         return this.#value / this.#max;
@@ -28,6 +20,9 @@ export default class Brightness extends GObject.Object {
         this.#value = parseInt(get(`set ${percent * 100}%`).split(",")[2]);
         this.notify("percentage");
     }
+    #max: number;
+
+    #value: number;
 
     constructor() {
         super();
@@ -41,5 +36,10 @@ export default class Brightness extends GObject.Object {
             this.#value = parseInt(readFile(f));
             this.notify("percentage");
         });
+    }
+
+    static get_default(): Brightness {
+        if (!this.instance) this.instance = new Brightness();
+        return this.instance;
     }
 }

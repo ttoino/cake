@@ -2,55 +2,55 @@ import { execAsync } from "ags/process";
 import Notifd from "gi://AstalNotifd";
 
 export const urgencyToString = {
+    [Notifd.Urgency.CRITICAL]: "critical",
     [Notifd.Urgency.LOW]: "low",
     [Notifd.Urgency.NORMAL]: "normal",
-    [Notifd.Urgency.CRITICAL]: "critical",
 };
 
 export const typeToHintType = {
-    string: "string",
-    number: "int",
     boolean: "boolean",
+    number: "int",
+    string: "string",
 };
 
 export interface NotifyArguments {
-    title: string;
-    body?: string;
-    urgency?: Notifd.Urgency;
-    expireTime?: number;
-    appName?: string;
-    icon?: string;
-    category?: string | string[];
-    transient?: boolean;
-    hint?: Record<string, string | number | boolean>;
-    id?: string;
     action?: Record<string, string>;
-
+    appName?: string;
+    body?: string;
+    category?: string | string[];
     // Extensions (not part of the spec)
     className?: string;
+    expireTime?: number;
     hideBody?: boolean;
     hideHeader?: boolean;
+    hint?: Record<string, boolean | number | string>;
+    icon?: string;
+    id?: string;
+
     image?: string;
-    slider?: number | { value: number; icon?: string };
+    slider?: { icon?: string; value: number } | number;
+    title: string;
+    transient?: boolean;
+    urgency?: Notifd.Urgency;
 }
 
 export const notify = ({
-    title,
-    body,
-    urgency,
-    expireTime,
-    appName,
-    icon,
-    category,
-    transient,
-    hint = {},
-    id,
     action = {},
+    appName,
+    body,
+    category,
     className,
+    expireTime,
     hideBody,
     hideHeader,
+    hint = {},
+    icon,
+    id,
     image,
     slider,
+    title,
+    transient,
+    urgency,
 }: NotifyArguments) => {
     const args = ["notify-send", "--print-id"];
 

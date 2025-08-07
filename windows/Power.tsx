@@ -1,53 +1,54 @@
-import { LOCK, POWER, POWER_SLEEP, RESTART, SNOWFLAKE } from "../lib/chars";
-import PowerService from "../providers/power";
-import IconButton from "../widgets/IconButton";
-import { dismissPopup } from "../services/windows";
 import { Astal, Gdk, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
+
+import { LOCK, POWER, POWER_SLEEP, RESTART, SNOWFLAKE } from "../lib/chars";
+import PowerService from "../providers/power";
+import { dismissPopup } from "../services/windows";
+import IconButton from "../widgets/IconButton";
 
 const power = PowerService.get_default();
 
 interface Action {
-    name: string;
+    action: () => void;
     icon: string;
     keybind: number;
-    action: () => void;
+    name: string;
 }
 
 const actions = [
     {
-        name: "shutdown",
+        action: power.shutdown,
         icon: POWER,
         keybind: Gdk.KEY_s,
-        action: power.shutdown,
+        name: "shutdown",
     },
     {
-        name: "restart",
+        action: power.restart,
         icon: RESTART,
         keybind: Gdk.KEY_r,
-        action: power.restart,
+        name: "restart",
     },
     {
-        name: "sleep",
+        action: power.sleep,
         icon: POWER_SLEEP,
         keybind: Gdk.KEY_z,
-        action: power.sleep,
+        name: "sleep",
     },
     {
-        name: "hibernate",
+        action: power.hibernate,
         icon: SNOWFLAKE,
         keybind: Gdk.KEY_h,
-        action: power.hibernate,
+        name: "hibernate",
     },
     {
-        name: "lock",
+        action: power.lock,
         icon: LOCK,
         keybind: Gdk.KEY_l,
-        action: power.lock,
+        name: "lock",
     },
 ] as const satisfies Action[];
 
-const ActionButton = ({ name, icon, action }: Action) => (
+const ActionButton = ({ action, icon, name }: Action) => (
     <box class={name}>
         <IconButton
             class="xl"
@@ -64,18 +65,18 @@ const ActionButton = ({ name, icon, action }: Action) => (
 export default function Power(props: Partial<JSX.IntrinsicElements["window"]>) {
     return (
         <window
-            name="power"
-            class="power-window"
             anchor={
                 Astal.WindowAnchor.BOTTOM |
                 Astal.WindowAnchor.LEFT |
                 Astal.WindowAnchor.RIGHT |
                 Astal.WindowAnchor.TOP
             }
-            layer={Astal.Layer.OVERLAY}
-            keymode={Astal.Keymode.EXCLUSIVE}
-            exclusivity={Astal.Exclusivity.IGNORE}
             application={app}
+            class="power-window"
+            exclusivity={Astal.Exclusivity.IGNORE}
+            keymode={Astal.Keymode.EXCLUSIVE}
+            layer={Astal.Layer.OVERLAY}
+            name="power"
             {...props}
         >
             <Gtk.EventControllerKey
@@ -88,7 +89,7 @@ export default function Power(props: Partial<JSX.IntrinsicElements["window"]>) {
                 }}
             />
 
-            <box valign={Gtk.Align.CENTER} halign={Gtk.Align.CENTER}>
+            <box halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER}>
                 <box class="power-controls" spacing={16}>
                     {actions.map(ActionButton)}
                 </box>

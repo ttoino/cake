@@ -1,4 +1,5 @@
 import { Astal, Gtk } from "ags/gtk4";
+
 import ActiveWindow from "../bar/ActiveWindow";
 import Audio from "../bar/Audio";
 import Battery from "../bar/Battery";
@@ -17,29 +18,29 @@ export default function Bar(
 ) {
     return (
         <window
-            name={accessor(props.gdkmonitor).as(
-                (monitor) => `bar-${monitor.model}`,
-            )}
-            exclusivity={Astal.Exclusivity.EXCLUSIVE}
             anchor={
                 Astal.WindowAnchor.BOTTOM |
                 Astal.WindowAnchor.LEFT |
                 Astal.WindowAnchor.RIGHT
             }
+            exclusivity={Astal.Exclusivity.EXCLUSIVE}
             marginBottom={16}
             marginLeft={16}
             marginRight={16}
             marginTop={0}
+            name={accessor(props.gdkmonitor).as(
+                (monitor) => `bar-${monitor.model}`,
+            )}
             {...props}
         >
             <centerbox class="bar">
-                <box halign={Gtk.Align.START} $type="start">
+                <box $type="start" halign={Gtk.Align.START}>
                     <Workspaces />
                 </box>
                 <box $type="center">
                     <ActiveWindow />
                 </box>
-                <box halign={Gtk.Align.END} spacing={4} $type="end">
+                <box $type="end" halign={Gtk.Align.END} spacing={4}>
                     <Media />
                     <Audio />
                     <Brightness />

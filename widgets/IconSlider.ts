@@ -8,9 +8,19 @@ export interface IconSliderProps extends Astal.Slider.ConstructorProps {
 
 @register({ CssName: "icon-slider" })
 export default class IconSlider extends Astal.Slider {
-    #iconLabel: Gtk.Label;
+    @getter(String)
+    get icon() {
+        return this.get_icon();
+    }
+
+    @setter(String)
+    set icon(icon) {
+        this.set_icon(icon);
+    }
 
     declare private __icon: string;
+
+    #iconLabel: Gtk.Label;
 
     constructor(props?: Partial<IconSliderProps>) {
         super(props);
@@ -21,38 +31,12 @@ export default class IconSlider extends Astal.Slider {
             valign: Gtk.Align.CENTER,
         });
         this.#iconLabel.set_parent(this);
-        this.bind_property("icon", this.#iconLabel, "label", GObject.BindingFlags.SYNC_CREATE);
-    }
-
-    vfunc_snapshot(snapshot: Gtk.Snapshot): void {
-        super.vfunc_snapshot(snapshot);
-
-        const [sliderStart, sliderEnd] = this.get_slider_range();
-
-        const [, iconWidth] = this.#iconLabel.measure(Gtk.Orientation.HORIZONTAL, -1);
-        const [, iconHeight] = this.#iconLabel.measure(Gtk.Orientation.VERTICAL, -1);
-
-        const { height } = this.get_allocation();
-
-        const allocation = new Gdk.Rectangle({
-            x: Math.round((sliderStart + sliderEnd - iconWidth) / 2),
-            y: Math.round((height - iconHeight) / 2),
-            width: iconWidth,
-            height: iconHeight,
-        });
-
-        this.#iconLabel.size_allocate(allocation, -1);
-
-        this.snapshot_child(this.#iconLabel, snapshot);
-    }
-
-    @getter(String)
-    get icon() {
-        return this.get_icon();
-    }
-    @setter(String)
-    set icon(icon) {
-        this.set_icon(icon);
+        this.bind_property(
+            "icon",
+            this.#iconLabel,
+            "label",
+            GObject.BindingFlags.SYNC_CREATE,
+        );
     }
     get_icon() {
         return this.__icon;
@@ -61,5 +45,32 @@ export default class IconSlider extends Astal.Slider {
         if (this.get_icon() === icon) return;
 
         this.__icon = icon;
+    }
+    vfunc_snapshot(snapshot: Gtk.Snapshot): void {
+        super.vfunc_snapshot(snapshot);
+
+        const [sliderStart, sliderEnd] = this.get_slider_range();
+
+        const [, iconWidth] = this.#iconLabel.measure(
+            Gtk.Orientation.HORIZONTAL,
+            -1,
+        );
+        const [, iconHeight] = this.#iconLabel.measure(
+            Gtk.Orientation.VERTICAL,
+            -1,
+        );
+
+        const { height } = this.get_allocation();
+
+        const allocation = new Gdk.Rectangle({
+            height: iconHeight,
+            width: iconWidth,
+            x: Math.round((sliderStart + sliderEnd - iconWidth) / 2),
+            y: Math.round((height - iconHeight) / 2),
+        });
+
+        this.#iconLabel.size_allocate(allocation, -1);
+
+        this.snapshot_child(this.#iconLabel, snapshot);
     }
 }

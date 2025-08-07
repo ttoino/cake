@@ -10,10 +10,7 @@
         "jsxImportSource": "ags/gtk4",
         "experimentalDecorators": false,
         "preserveSymlinks": true,
-        "skipLibCheck": true,
+        "skipLibCheck": true
     },
-    "exclude": [
-        "@girs/",
-        "node_modules/",
-    ],
+    "exclude": ["@girs/", "node_modules/"]
 }
