@@ -1,0 +1,20 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "."
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 20
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+    ignore:
+      - dependency-name: "ags"
+
+  - package-ecosystem: "github-actions"
+    directory: "."
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 20
