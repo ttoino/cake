@@ -10,7 +10,7 @@ import Media from "../bar/Media";
 import Network from "../bar/Network";
 import Notifications from "../bar/Notifications";
 import Workspaces from "../bar/Workspaces";
-import { accessor } from "../lib/vars";
+import { accessor } from "../lib/state";
 
 export default function Bar(
     props: Partial<Omit<JSX.IntrinsicElements["window"], "gdkmonitor">> &

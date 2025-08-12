@@ -48,6 +48,22 @@ export const wifiIcons = [
     chars.WIFI_STRENGTH_4,
 ] as const;
 
+export const bluetoothIcons = {
+    "audio-headphones": chars.HEADPHONES,
+    "audio-headset": chars.HEADSET,
+    "audio-speakers": chars.SPEAKER,
+    "camera-photo": chars.CAMERA,
+    "camera-video": chars.VIDEO,
+    computer: chars.LAPTOP,
+    "input-gaming": chars.CONTROLLER,
+    "input-keyboard": chars.KEYBOARD,
+    "input-mouse": chars.MOUSE,
+    phone: chars.CELLPHONE,
+    printer: chars.PRINTER,
+    scanner: chars.SCANNER,
+    "video-display": chars.VIDEO,
+} as const;
+
 export const iconRange = (icons: readonly string[], value: number) => {
     const index = Math.min(
         Math.max(0, Math.floor(value * icons.length)),
@@ -66,3 +82,8 @@ export const volumeRange = (volume: number) => iconRange(volumeIcons, volume);
 
 export const wifiRange = (strength: number) =>
     iconRange(wifiIcons, strength / 100);
+
+export const bluetoothIcon = (icon: string, fallback?: string) =>
+    icon in bluetoothIcons
+        ? bluetoothIcons[icon as keyof typeof bluetoothIcons]
+        : fallback;

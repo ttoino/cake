@@ -1,7 +1,7 @@
 import { Astal } from "ags/gtk4";
 import app from "ags/gtk4/app";
 
-import { accessor } from "../lib/vars";
+import { accessor } from "../lib/state";
 
 export default function Scrim(
     props: Partial<Omit<JSX.IntrinsicElements["window"], "gdkmonitor">> &

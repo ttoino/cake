@@ -1,7 +1,8 @@
-import { createBinding } from "ags";
+import { createBinding, createComputed } from "ags";
 import Mpris from "gi://AstalMpris";
 
 import { MUSIC_NOTE, SEPARATOR } from "../lib/chars";
+import { createArrayBinding } from "../lib/state";
 import { togglePopup } from "../services/windows";
 import IconButton from "../widgets/IconButton";
 
@@ -12,16 +13,17 @@ export default function Media() {
         <IconButton
             class="media"
             onClicked={() => togglePopup("media")}
-            tooltipText={createBinding(media, "players").as((players) =>
-                players
-                    .map(
-                        (player) =>
-                            `${player.title} ${SEPARATOR} ${
-                                player.artist || player.albumArtist
-                            }`,
-                    )
-                    .join("\n"),
-            )}
+            tooltipText={createArrayBinding(media, "players", (player) =>
+                createComputed(
+                    [
+                        createBinding(player, "title"),
+                        createBinding(player, "artist"),
+                        createBinding(player, "albumArtist"),
+                    ],
+                    (title, artist, albumArtist) =>
+                        `${title} ${SEPARATOR} ${artist || albumArtist}`,
+                ),
+            ).as((players) => players.join("\n"))}
             visible={createBinding(media, "players").as((p) => p.length > 0)}
         >
             {MUSIC_NOTE}

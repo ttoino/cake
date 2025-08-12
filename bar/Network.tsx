@@ -26,7 +26,7 @@ const icons = createComputed(
             icons.push(wifiRange(wifiStrength));
         if (icons.length === 0) icons.push(WEB_OFF);
 
-        return icons.join();
+        return icons.join("");
     },
 );
 const tooltip = createComputed(

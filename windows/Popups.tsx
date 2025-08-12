@@ -2,7 +2,7 @@ import { createBinding, For } from "ags";
 import { Astal, Gtk } from "ags/gtk4";
 
 import { ascending } from "../lib/sorting";
-import { accessor } from "../lib/vars";
+import { accessor } from "../lib/state";
 import Notifications from "../providers/notifications";
 import Notification from "../widgets/Notification";
 

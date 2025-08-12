@@ -7,30 +7,51 @@ import {
     BLUETOOTH_OFF,
     SEPARATOR,
 } from "../lib/chars";
+import { bluetoothIcon } from "../lib/icons";
+import { createArrayBinding } from "../lib/state";
 import { togglePopup } from "../services/windows";
 import IconButton from "../widgets/IconButton";
 
 const bluetooth = BluetoothService.get_default();
 
-const connected = createBinding(bluetooth, "devices").as((devices) =>
-    devices.filter((d) => d.connected),
-);
 const icon = createComputed(
-    [createBinding(bluetooth, "isPowered"), connected],
+    [
+        createBinding(bluetooth, "isPowered"),
+        createArrayBinding(bluetooth, "devices", (dev) =>
+            createComputed(
+                [createBinding(dev, "connected"), createBinding(dev, "icon")],
+                (connected, icon) =>
+                    connected ? bluetoothIcon(icon, BLUETOOTH_CONNECT) : "",
+            ),
+        ),
+    ],
     (isPowered, devices) =>
-        isPowered
-            ? devices.length > 0
-                ? BLUETOOTH_CONNECT
-                : BLUETOOTH
-            : BLUETOOTH_OFF,
+        isPowered ? devices.join("") || BLUETOOTH : BLUETOOTH_OFF,
 );
+
 const tooltip = createComputed(
-    [createBinding(bluetooth, "isPowered"), connected],
+    [
+        createBinding(bluetooth, "isPowered"),
+        createArrayBinding(bluetooth, "devices", (dev) =>
+            createComputed(
+                [
+                    createBinding(dev, "connected"),
+                    createBinding(dev, "name"),
+                    createBinding(dev, "batteryPercentage"),
+                ],
+                (connected, name, batteryPercentage) =>
+                    connected
+                        ? name +
+                          (batteryPercentage >= 0
+                              ? ` ${SEPARATOR} ${batteryPercentage * 100}%`
+                              : "")
+                        : "",
+            ),
+        ),
+    ],
     (isPowered, devices) =>
         isPowered
-            ? devices.length > 0
-                ? devices.map((device) => device.name).join(` ${SEPARATOR} `)
-                : "Not connected"
+            ? devices.filter((d) => !!d).join("\n") || "Not connected"
             : "Bluetooth off",
 );
 

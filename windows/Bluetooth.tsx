@@ -3,50 +3,19 @@ import { Astal, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 import BluetoothService from "gi://AstalBluetooth";
 
-import {
-    BLUETOOTH,
-    CAMERA,
-    CELLPHONE,
-    CONTROLLER,
-    HEADPHONES,
-    HEADSET,
-    KEYBOARD,
-    LAPTOP,
-    MOUSE,
-    PRINTER,
-    SCANNER,
-    SPEAKER,
-    VIDEO,
-} from "../lib/chars";
+import { BLUETOOTH } from "../lib/chars";
+import { bluetoothIcon } from "../lib/icons";
 import { ascending, descending } from "../lib/sorting";
 import BaseDevice from "../widgets/Device";
 
 const bluetooth = BluetoothService.get_default();
 
-const ICONS = {
-    "audio-headphones": HEADPHONES,
-    "audio-headset": HEADSET,
-    "audio-speakers": SPEAKER,
-    "camera-photo": CAMERA,
-    "camera-video": VIDEO,
-    computer: LAPTOP,
-    "input-gaming": CONTROLLER,
-    "input-keyboard": KEYBOARD,
-    "input-mouse": MOUSE,
-    phone: CELLPHONE,
-    printer: PRINTER,
-    scanner: SCANNER,
-    "video-display": VIDEO,
-};
-
 const Device = (device: BluetoothService.Device) => (
     <BaseDevice
         activating={createBinding(device, "connecting")}
         active={createBinding(device, "connected")}
-        icon={createBinding(device, "icon").as((icon_name) =>
-            icon_name in ICONS
-                ? ICONS[icon_name as keyof typeof ICONS]
-                : BLUETOOTH,
+        icon={createBinding(device, "icon").as((icon) =>
+            bluetoothIcon(icon, BLUETOOTH),
         )}
         iconTooltip={createBinding(device, "icon")}
         onPrimaryClick={() =>

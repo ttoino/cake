@@ -1,7 +1,7 @@
 import { Astal, Gdk, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 
-import { accessor } from "../lib/vars";
+import { accessor } from "../lib/state";
 import { dismissPopup } from "../services/windows";
 
 export default function Dismisser(

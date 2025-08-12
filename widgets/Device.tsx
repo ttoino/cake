@@ -1,7 +1,7 @@
 import { Accessor, createComputed } from "ags";
 import { Gtk } from "ags/gtk4";
 
-import { accessor } from "../lib/vars";
+import { accessor } from "../lib/state";
 import Icon from "./Icon";
 
 export interface DeviceProps {
