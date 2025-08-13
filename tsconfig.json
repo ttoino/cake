@@ -11,6 +11,5 @@
         "experimentalDecorators": false,
         "preserveSymlinks": true,
         "skipLibCheck": true
-    },
-    "exclude": ["@girs/", "node_modules/"]
+    }
 }
