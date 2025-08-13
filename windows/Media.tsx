@@ -5,9 +5,9 @@ import Mpris from "gi://AstalMpris";
 
 import { PAUSE, PLAY, SKIP_NEXT, SKIP_PREVIOUS } from "../lib/chars";
 import { ascending } from "../lib/sorting";
+import { createBooleanBinding, createDefaultBinding } from "../lib/state";
 import IconButton from "../widgets/IconButton";
 import ScrollText from "../widgets/ScrollText";
-import { createBooleanBinding, createDefaultBinding } from "../lib/state";
 
 const mpris = Mpris.get_default();
 
