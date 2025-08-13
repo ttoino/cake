@@ -2,8 +2,12 @@
 @use "./colors.scss" as c;
 @use "./text.scss" as t;
 
-@use "./colored.scss";
+@use "./components/button.scss";
+@use "./components/entry.scss";
+@use "./components/slider.scss";
+@use "./components/switch.scss";
 
+@use "./widgets/device.scss";
 @use "./widgets/notification.scss";
 
 @use "./windows/bar.scss";
@@ -19,9 +23,22 @@
 }
 
 .background {
-    border-radius: 24px;
     background-color: cp.$base;
     color: cp.$text;
+}
+
+window.background {
+    @include t.type("body-medium");
+
+    border-radius: 24px;
+}
+
+tooltip.background {
+    @include t.type("body-small");
+
+    border-radius: 4px;
+    padding: 0 8px;
+    min-height: 24px;
 }
 
 .info-window {

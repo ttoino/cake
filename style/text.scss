@@ -132,5 +132,5 @@ $type-scale: (
         map.get($type-scale, letter-spacing),
         map.get($type-scale, size)
     );
-    // line-height: ptToRem(map.get($type-scale, line-height));
+    line-height: ptToRem(map.get($type-scale, line-height));
 }
