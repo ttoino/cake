@@ -52,6 +52,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+      - name: Setup nix
+        uses: cachix/install-nix-action@v31
+      # Workaround for ags changing the tsconfig f
+      - name: Backup tsconfig
+        run: cp tsconfig.json tsconfig.json.bak
+      - name: Install ags
+        run: nix develop --command ags types --directory . --update
+      - name: Restore tsconfig
+        run: mv tsconfig.json.bak tsconfig.json
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
       - name: Setup Node.js
