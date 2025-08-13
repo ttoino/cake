@@ -89,8 +89,8 @@ export default class Notifications extends GObject.Object {
 
         this._popups.add(id);
 
-        let timeoutMs = this.get(id)!.expireTimeout;
-        if (timeoutMs <= 0) timeoutMs = 5000;
+        let timeoutMs = this.get(id)?.expireTimeout;
+        if (timeoutMs == undefined || timeoutMs <= 0) timeoutMs = 5000;
         console.debug(`Notification ${id} timeout: ${timeoutMs}`);
         this._timeouts.set(
             id,

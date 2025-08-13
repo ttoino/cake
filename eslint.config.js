@@ -1,7 +1,10 @@
+// @ts-check
+
 import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
 import prettier from "eslint-config-prettier";
 import perfectionist from "eslint-plugin-perfectionist";
+import globals from "globals";
 import { fileURLToPath } from "node:url";
 import ts from "typescript-eslint";
 
@@ -12,6 +15,12 @@ export default ts.config(
 
     js.configs.recommended,
     ...ts.configs.strict,
+    {
+        files: ["eslint.config.js"],
+        languageOptions: {
+            globals: globals.node,
+        },
+    },
 
     perfectionist.configs["recommended-alphabetical"],
     {
