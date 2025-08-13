@@ -82,47 +82,6 @@ export default function ActiveWindow() {
                     />
                 )}
             </With>
-
-            {/* <With value={createBinding(hyprland, "focusedClient")}>
-                {(client) => {
-                    if (!client) return <></>;
-
-                    return (
-                        <>
-                            <label
-                                ellipsize={Pango.EllipsizeMode.END}
-                                label={createBinding(client, "title")}
-                            />
-                            <Icon
-                                visible={createBinding(client, "floating")}
-                                label={WINDOW_RESTORE}
-                            />
-                            <Icon
-                                visible={createBinding(client, "fullscreen").as(
-                                    (it) =>
-                                        !!(it & Hyprland.Fullscreen.MAXIMIZED),
-                                )}
-                                label={FULLSCREEN_EXIT}
-                            />
-                            <Icon
-                                visible={createBinding(client, "fullscreen").as(
-                                    (it) =>
-                                        !!(it & Hyprland.Fullscreen.FULLSCREEN),
-                                )}
-                                label={FULLSCREEN}
-                            />
-                            <Icon
-                                visible={createBinding(client, "xwayland")}
-                                label={ALPHA_X_CIRCLE}
-                            />
-                            <Icon
-                                visible={createBinding(client, "pinned")}
-                                label={PIN}
-                            />
-                        </>
-                    );
-                }}
-            </With> */}
         </box>
     );
 }

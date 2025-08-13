@@ -14,6 +14,7 @@ import { volumeRange } from "../lib/icons";
 import ExpandableWindow from "../widgets/ExpandableWindow";
 import IconSlider from "../widgets/IconSlider";
 import ScrollText from "../widgets/ScrollText";
+import { createDefaultBinding } from "../lib/state";
 
 const audio = Wp.get_default()?.audio;
 
@@ -117,11 +118,7 @@ const Device = ({
                 <Title
                     icon={CHEVRON_DOWN}
                     next="select"
-                    title={createBinding(selectedDevice, "description").as(
-                        (description) =>
-                            description ??
-                            (isSpeaker ? "Speaker" : "Microphone"),
-                    )}
+                    title={createDefaultBinding(selectedDevice, "description", isSpeaker ? "Speaker" : "Microphone")}
                 />
                 <box spacing={8}>
                     <VolumeSlider

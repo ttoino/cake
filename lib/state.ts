@@ -13,13 +13,23 @@ export const createArrayBinding = <
 >(
     object: T,
     property: Extract<P, string>,
-    mapFn: (value: T[P][number]) => Accessor<V>,
+    mapFn: (value: T[P] extends (infer V)[] ? V : never) => Accessor<V>,
 ): Accessor<V[]> =>
     flatAccessor(
         createBinding(object, property).as((value) =>
-            createComputed(value.map(mapFn)),
+            createComputed(
+                (value as unknown[]).map(mapFn as (_: unknown) => Accessor<V>),
+            ),
         ),
     );
+
+export const createBooleanBinding = <
+    T extends GObject.Object,
+    P extends keyof T,
+>(
+    object: T,
+    property: Extract<P, string>,
+): Accessor<boolean> => createBinding(object, property).as((value) => !!value);
 
 export const createDefaultBinding = <
     T extends GObject.Object,

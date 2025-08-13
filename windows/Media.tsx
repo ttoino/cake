@@ -7,6 +7,7 @@ import { PAUSE, PLAY, SKIP_NEXT, SKIP_PREVIOUS } from "../lib/chars";
 import { ascending } from "../lib/sorting";
 import IconButton from "../widgets/IconButton";
 import ScrollText from "../widgets/ScrollText";
+import { createBooleanBinding, createDefaultBinding } from "../lib/state";
 
 const mpris = Mpris.get_default();
 
@@ -33,14 +34,14 @@ const Player = (player: Mpris.Player, onChoose: () => void) => (
             class="cover"
             file={createBinding(player, "coverArt")}
             overflow={Gtk.Overflow.HIDDEN}
-            visible={createBinding(player, "coverArt").as((image) => !!image)}
+            visible={createBooleanBinding(player, "coverArt")}
         />
         <box orientation={Gtk.Orientation.VERTICAL}>
             <ScrollText class="title" label={createBinding(player, "title")} />
             <ScrollText
                 class="artist"
-                label={createBinding(player, "artist").as((a) => a ?? "")}
-                visible={createBinding(player, "artist").as((a) => !!a)}
+                label={createDefaultBinding(player, "artist", "")}
+                visible={createBooleanBinding(player, "artist")}
             />
         </box>
         <box halign={Gtk.Align.CENTER} spacing={16}>
