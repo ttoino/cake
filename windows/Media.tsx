@@ -29,11 +29,10 @@ const Player = (player: Mpris.Player, onChoose: () => void) => (
                 )}
             />
         </button>
-        <box
+        <image
             class="cover"
-            css={createBinding(player, "coverArt").as(
-                (image) => `background-image: url("${image}")`,
-            )}
+            file={createBinding(player, "coverArt")}
+            overflow={Gtk.Overflow.HIDDEN}
             visible={createBinding(player, "coverArt").as((image) => !!image)}
         />
         <box orientation={Gtk.Orientation.VERTICAL}>
