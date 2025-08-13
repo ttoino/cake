@@ -124,7 +124,7 @@ const NotificationActions = (notification: NotificationObject) => {
                 {notification.actions.map((action) => (
                     <button
                         label={action.label}
-                        onClicked={() => notification.invoke(action.id)}
+                        // onClicked={() => notification.invoke(action.id)}
                     />
                 ))}
             </box>

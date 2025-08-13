@@ -56,7 +56,7 @@ const tryRender =
             return fn(props);
         } catch (e) {
             console.error(`Error rendering window: ${e}`);
-            console.error(e.stack);
+            if (e instanceof Error) console.error(e.stack);
             return (
                 <window
                     anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT}
