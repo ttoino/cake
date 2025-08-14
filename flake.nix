@@ -22,23 +22,19 @@
       pname = "cake";
       entry = "app.ts";
 
-      ags-bin =
-        with ags.packages.${system};
-        (default.override {
-          extraPackages = [
-            apps
-            astal4
-            battery
-            bluetooth
-            hyprland
-            io
-            mpris
-            network
-            notifd
-            powerprofiles
-            wireplumber
-          ];
-        });
+      extraPackages = with ags.packages.${system}; [
+        apps
+        astal4
+        battery
+        bluetooth
+        hyprland
+        io
+        mpris
+        network
+        notifd
+        powerprofiles
+        wireplumber
+      ];
     in
     {
       packages.${system}.default = pkgs.stdenv.mkDerivation {
@@ -46,12 +42,12 @@
         src = ./.;
 
         nativeBuildInputs = with pkgs; [
-          ags-bin
+          ags.packages.${system}.default
           gobject-introspection
           wrapGAppsHook
         ];
 
-        buildInputs = [ pkgs.gjs ];
+        buildInputs = extraPackages ++ [ pkgs.gjs ];
 
         installPhase = ''
           runHook preInstall
@@ -67,7 +63,7 @@
 
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
-          ags-bin
+          (ags.packages.${system}.default.override { inherit extraPackages; })
           corepack
           nixfmt-rfc-style
           nodejs
