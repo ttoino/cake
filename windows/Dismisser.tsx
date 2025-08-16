@@ -24,7 +24,7 @@ export default function Dismisser(
             name={accessor(props.gdkmonitor).as(
                 (monitor) => `dismisser-${monitor.model}`,
             )}
-            namespace="ags-dismisser"
+            namespace="cake-dismisser"
             {...props}
         >
             <Gtk.GestureClick onPressed={() => dismissPopup()} />

@@ -22,7 +22,7 @@ export default function Scrim(
             name={accessor(props.gdkmonitor).as(
                 (monitor) => `scrim-${monitor.model}`,
             )}
-            namespace="ags-scrim"
+            namespace="cake-scrim"
             {...props}
         />
     );
