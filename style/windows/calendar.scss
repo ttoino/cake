@@ -1,13 +1,13 @@
-@use "../catppuccin.scss" as cp;
-@use "../text.scss" as t;
+@use "theme/catppuccin" as cp;
+@use "mixins/typography" as *;
 
 .calendar-window {
     calendar {
-        @include t.type("label-medium");
+        @include typography(label-medium);
 
         // Calendar header (month and year)
         header {
-            @include t.type("title-large");
+            @include typography(title-large);
             color: cp.$blue;
         }
 
@@ -28,7 +28,7 @@
 
             // Marked days
             :selected {
-                @include t.type("label-medium", true);
+                @include typography(label-medium);
             }
 
             // Current day

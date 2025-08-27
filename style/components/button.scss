@@ -1,30 +1,153 @@
 @use "sass:color";
 
-@use "../catppuccin.scss" as cp;
-@use "../colors.scss" as c;
-@use "../text.scss" as t;
+@use "mixins/elevation" as *;
+@use "mixins/state_layer" as *;
+@use "mixins/typography" as *;
+
+@use "theme/color" as *;
 
 button {
-    @include t.type(label-large);
-
-    min-width: 48px;
-    min-height: 40px;
-    padding: 0 12px;
-    border-radius: 20px;
-    color: var(--accent-color);
+    @include state-layer;
 
     transition-property:
-        background-color, background-image, border-color, color, box-shadow;
+        background-color, background-image, border-color, border-radius, color,
+        box-shadow;
     transition-duration: 0.3s;
 
+    &.elevated {
+        @include elevation(1);
+
+        background-color: $surface-container-low;
+        color: $primary;
+
+        &.toggle:checked {
+            background-color: $primary;
+            color: $on-primary;
+        }
+    }
+
     &.filled {
-        background-color: var(--accent-color);
-        color: cp.$base;
+        background-color: $primary;
+        color: $on-primary;
+
+        &.toggle:not(:checked) {
+            background-color: $surface-container;
+            color: $on-surface-variant;
+        }
+    }
+
+    &.tonal {
+        background-color: $primary-container;
+        color: $on-primary-container;
+
+        &.toggle:checked {
+            background-color: $primary;
+            color: $on-primary;
+        }
     }
 
     &.outlined {
-        border: 1px solid var(--accent-color);
-        min-height: 38px;
+        border-style: solid;
+        border-color: $outline-variant;
+        color: $on-surface-variant;
+
+        &.toggle:checked {
+            background-color: $inverse-surface;
+            color: $inverse-on-surface;
+            border-width: 0;
+        }
+    }
+
+    // Text
+    color: $primary;
+
+    &.extra-small {
+        @include typography(label-large);
+
+        border-radius: 16px;
+        border-width: 1px;
+        min-height: 32px;
+        padding: 0 12px;
+
+        &.square:not(:checked),
+        &:not(.square).toggle:checked {
+            border-radius: 12px;
+        }
+
+        &:active:active:active:active:active {
+            border-radius: 8px;
+        }
+    }
+
+    // Small
+    @include typography(label-large);
+
+    border-radius: 20px;
+    border-width: 1px;
+    min-height: 40px;
+    padding: 0 16px;
+
+    &.square:not(:checked),
+    &:not(.square).toggle:checked {
+        border-radius: 12px;
+    }
+
+    &:active:active:active:active:active {
+        border-radius: 8px;
+    }
+
+    &.medium {
+        @include typography(title-medium);
+
+        border-radius: 28px;
+        border-width: 1px;
+        min-height: 56px;
+        padding: 0 24px;
+
+        &.square:not(:checked),
+        &:not(.square).toggle:checked {
+            border-radius: 16px;
+        }
+
+        &:active:active:active:active:active {
+            border-radius: 12px;
+        }
+    }
+
+    &.large {
+        @include typography(headline-small);
+
+        border-radius: 48px;
+        border-width: 2px;
+        min-height: 96px;
+        padding: 0 48px;
+
+        &.square:not(:checked),
+        &:not(.square).toggle:checked {
+            border-radius: 28px;
+        }
+
+        &:active:active:active:active:active {
+            border-radius: 16px;
+        }
+    }
+
+    &.extra-large {
+        @include typography(headline-large);
+
+        border-radius: 68px;
+        border-width: 3px;
+        min-height: 136px;
+        padding: 0 64px;
+
+        &.square:not(:checked),
+        &:not(.square).toggle:checked {
+            border-radius: 28px;
+        }
+
+        &:active:active:active:active:active {
+            border-radius: 16px;
+        }
     }
 
     &.icon {
@@ -49,36 +172,5 @@ button {
             font-size: 48px;
             padding: 8px;
         }
-    }
-
-    &:hover {
-        box-shadow: inset 0 0 0 1000px
-            c.alpha(currentColor, $alpha: 0.07999999821186066);
-    }
-
-    &:focus {
-        box-shadow: inset 0 0 0 1000px
-            c.alpha(currentColor, $alpha: 0.11999999731779099);
-    }
-
-    &:active {
-        animation: forwards 0.3s ripple;
-    }
-}
-
-@keyframes ripple {
-    from {
-        background-image: radial-gradient(
-            circle,
-            c.alpha(currentColor, $alpha: 0.11999999731779099) 0%,
-            transparent 0%
-        );
-    }
-    to {
-        background-image: radial-gradient(
-            circle,
-            c.alpha(currentColor, $alpha: 0.11999999731779099) 100%,
-            transparent 100%
-        );
     }
 }

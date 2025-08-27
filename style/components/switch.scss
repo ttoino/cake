@@ -1,7 +1,7 @@
 @use "sass:color";
 
-@use "../colors.scss" as c;
-@use "../catppuccin.scss" as cp;
+@use "theme/color" as c;
+@use "theme/catppuccin" as cp;
 
 switch {
     background-color: c.alpha(var(--accent-color), $alpha: 0.24);

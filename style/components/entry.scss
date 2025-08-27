@@ -1,11 +1,11 @@
 @use "sass:color";
 
-@use "../catppuccin.scss" as cp;
-@use "../colors.scss" as c;
-@use "../text.scss" as t;
+@use "theme/catppuccin" as cp;
+@use "theme/color" as c;
+@use "mixins/typography" as *;
 
 entry {
-    @include t.type(label-large);
+    @include typography(label-large);
 
     min-width: 48px;
     min-height: 40px;

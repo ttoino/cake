@@ -1,0 +1,68 @@
+@mixin state-layer {
+    --state-layer-opacity: 0%;
+
+    background-image: radial-gradient(
+        circle,
+        color-mix(
+                in oklab,
+                currentColor var(--state-layer-opacity),
+                transparent
+            )
+            100%,
+        color-mix(
+                in oklab,
+                currentColor var(--state-layer-opacity),
+                transparent
+            )
+            100%
+    );
+
+    &:hover {
+        --state-layer-opacity: 8%;
+    }
+
+    &:focus {
+        --state-layer-opacity: 10%;
+    }
+
+    &:active {
+        animation: forwards 0.3s state-layer-ripple;
+    }
+}
+
+@keyframes state-layer-ripple {
+    from {
+        background-image: radial-gradient(
+            circle,
+            color-mix(
+                    in oklab,
+                    currentColor calc(var(--state-layer-opacity) + 10%),
+                    transparent
+                )
+                0%,
+            color-mix(
+                    in oklab,
+                    currentColor var(--state-layer-opacity),
+                    transparent
+                )
+                0%
+        );
+    }
+    to {
+        background-image: radial-gradient(
+            circle,
+            color-mix(
+                    in oklab,
+                    currentColor calc(var(--state-layer-opacity) + 10%),
+                    transparent
+                )
+                100%,
+            color-mix(
+                    in oklab,
+                    currentColor var(--state-layer-opacity),
+                    transparent
+                )
+                100%
+        );
+    }
+}

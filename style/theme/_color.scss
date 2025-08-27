@@ -1,0 +1,54 @@
+@use "sass:string";
+
+@use "theme/catppuccin" as *;
+
+$_primary-colors: (
+    // Info windows
+    "audio": $pink,
+    "battery": $green,
+    "battery.discharging": $peach,
+    "battery.critical": $red,
+    "bluetooth": $blue,
+    "brightness": $yellow,
+    "network": $sapphire,
+
+    // Power
+    "shutdown": $red,
+    "restart": $green,
+    "sleep": $blue,
+    "hibernate": $sapphire,
+    "lock": $yellow
+);
+
+@function alpha($color, $alpha) {
+    @return string.unquote("alpha(#{$color}, #{$alpha})");
+}
+
+$surface: $base;
+$on-surface: $text;
+$surface-variant: $overlay2;
+$on-surface-variant: $subtext1;
+$surface-container-lowest: $mantle;
+$surface-container-low: $surface0;
+$surface-container: $surface1;
+$surface-container-high: $surface2;
+$surface-container-highest: $overlay0;
+$inverse-surface: $on-surface;
+$inverse-on-surface: $surface;
+
+$outline: color-mix(in oklab, $surface-variant 50%, $on-surface-variant 50%);
+$outline-variant: $surface-variant;
+
+$scrim: $crust;
+
+$primary: var(--primary, #{$green});
+$on-primary: color-mix(in oklab, $primary 20%, $surface 80%);
+$primary-container: color-mix(in oklab, $primary 30%, $surface 70%);
+$on-primary-container: color-mix(in oklab, $primary 50%, $on-surface 50%);
+
+@each $name, $color in $_primary-colors {
+    ##{$name},
+    .#{$name} {
+        --primary: #{$color};
+    }
+}

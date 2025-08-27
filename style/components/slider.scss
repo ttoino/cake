@@ -1,7 +1,7 @@
 @use "sass:color";
 
-@use "../catppuccin.scss" as cp;
-@use "../colors.scss" as c;
+@use "theme/catppuccin" as cp;
+@use "theme/color" as c;
 
 scale {
     min-height: 16px;

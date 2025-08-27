@@ -65,6 +65,13 @@ export default function Battery(
                                             powerProfiles,
                                             "activeProfile",
                                         ).as((p) => p === profile.profile)}
+                                        class="toggle filled"
+                                        onToggled={({ active }) =>
+                                            active &&
+                                            powerProfiles.set_active_profile(
+                                                profile.profile,
+                                            )
+                                        }
                                     >
                                         {profile.profile}
                                     </togglebutton>

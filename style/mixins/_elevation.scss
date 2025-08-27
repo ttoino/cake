@@ -1,0 +1,15 @@
+@use "sass:map";
+
+@use "theme/elevation" as *;
+
+$_elevations: (
+    1: $elevation1,
+    2: $elevation2,
+    3: $elevation3,
+    4: $elevation4,
+    5: $elevation5,
+);
+
+@mixin elevation($level) {
+    box-shadow: map.get($_elevations, $level);
+}

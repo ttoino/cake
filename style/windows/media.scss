@@ -1,4 +1,4 @@
-@use "./text.scss" as t;
+@use "mixins/typography" as *;
 
 .media-window {
     &.info-window {
@@ -6,11 +6,11 @@
     }
 
     .title {
-        @include t.type("title-large");
+        @include typography(title-large);
     }
 
     .artist {
-        @include t.type("body-large");
+        @include typography(body-large);
     }
 
     .cover {
