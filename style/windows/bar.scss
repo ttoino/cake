@@ -3,6 +3,12 @@
 .bar {
     border-radius: 24px;
     padding: 4px;
+
+    .battery {
+        font-variation-settings:
+            "PGRS" var(--battery),
+            "FILL" calc(round(var(--battery) / 100));
+    }
 }
 
 #clock {

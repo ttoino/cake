@@ -6,8 +6,8 @@ import {
     ALPHA_X_CIRCLE,
     FULLSCREEN,
     FULLSCREEN_EXIT,
-    PIN,
-    WINDOW_RESTORE,
+    KEEP,
+    SELECT_WINDOW,
 } from "../lib/chars";
 import Icon from "../widgets/Icon";
 
@@ -31,7 +31,7 @@ export default function ActiveWindow() {
             <With value={client}>
                 {(client) => (
                     <Icon
-                        label={WINDOW_RESTORE}
+                        label={SELECT_WINDOW}
                         visible={client && createBinding(client, "floating")}
                     />
                 )}
@@ -77,7 +77,7 @@ export default function ActiveWindow() {
             <With value={client}>
                 {(client) => (
                     <Icon
-                        label={PIN}
+                        label={KEEP}
                         visible={client && createBinding(client, "pinned")}
                     />
                 )}

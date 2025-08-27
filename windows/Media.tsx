@@ -3,7 +3,7 @@ import { Astal, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 import Mpris from "gi://AstalMpris";
 
-import { PAUSE, PLAY, SKIP_NEXT, SKIP_PREVIOUS } from "../lib/chars";
+import { PAUSE, PLAY_ARROW, SKIP_NEXT, SKIP_PREVIOUS } from "../lib/chars";
 import { ascending } from "../lib/sorting";
 import { createBooleanBinding, createDefaultBinding } from "../lib/state";
 import IconButton from "../widgets/IconButton";
@@ -54,7 +54,9 @@ const Player = (player: Mpris.Player, onChoose: () => void) => (
             <IconButton
                 class="xl"
                 label={createBinding(player, "playbackStatus").as((status) =>
-                    status === Mpris.PlaybackStatus.PLAYING ? PAUSE : PLAY,
+                    status === Mpris.PlaybackStatus.PLAYING
+                        ? PAUSE
+                        : PLAY_ARROW,
                 )}
                 onClicked={() => player.play_pause()}
             />

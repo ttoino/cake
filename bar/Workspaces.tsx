@@ -2,9 +2,9 @@ import { createBinding, createComputed, For } from "ags";
 import Hyprland from "gi://AstalHyprland";
 
 import {
-    RADIOBOX_BLANK,
-    RADIOBOX_INDETERMINATE,
-    RADIOBOX_MARKED,
+    RADIO_BUTTON_CHECKED,
+    RADIO_BUTTON_PARTIAL,
+    RADIO_BUTTON_UNCHECKED,
 } from "../lib/chars";
 import IconButton from "../widgets/IconButton";
 
@@ -39,10 +39,10 @@ export default function Workspaces() {
                             ],
                             (fw, clients) =>
                                 fw.id === ws.id
-                                    ? RADIOBOX_MARKED
+                                    ? RADIO_BUTTON_CHECKED
                                     : clients.length > 0
-                                      ? RADIOBOX_INDETERMINATE
-                                      : RADIOBOX_BLANK,
+                                      ? RADIO_BUTTON_PARTIAL
+                                      : RADIO_BUTTON_UNCHECKED,
                         )}
                         onClicked={() =>
                             hyprland.dispatch("workspace", ws.id.toString())

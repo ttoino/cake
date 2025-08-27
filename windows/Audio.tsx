@@ -6,8 +6,8 @@ import Wp from "gi://AstalWp";
 import {
     CHEVRON_DOWN,
     CHEVRON_UP,
-    MICROPHONE,
-    MICROPHONE_OFF,
+    MIC,
+    MIC_OFF,
     VOLUME_MUTE,
 } from "../lib/chars";
 import { volumeRange } from "../lib/icons";
@@ -28,11 +28,7 @@ const VolumeSlider = ({
     <IconSlider
         drawValue={false}
         hexpand
-        icon={
-            isSpeaker
-                ? createBinding(device, "volume").as(volumeRange)
-                : MICROPHONE
-        }
+        icon={isSpeaker ? createBinding(device, "volume").as(volumeRange) : MIC}
         onNotifyValue={({ value }) => (device.volume = value)}
         step={5}
         value={createBinding(device, "volume")}
@@ -57,8 +53,8 @@ const MuteButton = ({
                         ? VOLUME_MUTE
                         : volumeRange(volume)
                     : mute
-                      ? MICROPHONE_OFF
-                      : MICROPHONE,
+                      ? MIC_OFF
+                      : MIC,
         )}
         onToggled={({ active }) => device.set_mute(active)}
         valign={Gtk.Align.CENTER}

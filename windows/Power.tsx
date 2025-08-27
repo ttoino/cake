@@ -1,7 +1,13 @@
 import { Astal, Gdk, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 
-import { LOCK, POWER, POWER_SLEEP, RESTART, SNOWFLAKE } from "../lib/chars";
+import {
+    LOCK,
+    MODE_COOL,
+    MODE_OFF_ON,
+    MODE_STANDBY,
+    RESTART_ALT,
+} from "../lib/chars";
 import PowerService from "../providers/power";
 import { dismissPopup } from "../services/windows";
 import IconButton from "../widgets/IconButton";
@@ -18,25 +24,25 @@ interface Action {
 const actions = [
     {
         action: power.shutdown,
-        icon: POWER,
+        icon: MODE_OFF_ON,
         keybind: Gdk.KEY_s,
         name: "shutdown",
     },
     {
         action: power.restart,
-        icon: RESTART,
+        icon: RESTART_ALT,
         keybind: Gdk.KEY_r,
         name: "restart",
     },
     {
         action: power.sleep,
-        icon: POWER_SLEEP,
+        icon: MODE_STANDBY,
         keybind: Gdk.KEY_z,
         name: "sleep",
     },
     {
         action: power.hibernate,
-        icon: SNOWFLAKE,
+        icon: MODE_COOL,
         keybind: Gdk.KEY_h,
         name: "hibernate",
     },

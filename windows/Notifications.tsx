@@ -2,7 +2,7 @@ import { createBinding, For } from "ags";
 import { Astal, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 
-import { BELL, BELL_OFF, NOTIFICATION_CLEAR } from "../lib/chars";
+import { CLEAR_ALL, NOTIFICATIONS, NOTIFICATIONS_OFF } from "../lib/chars";
 import { ascending } from "../lib/sorting";
 import NotificationsProvider from "../providers/notifications";
 import IconButton from "../widgets/IconButton";
@@ -49,14 +49,15 @@ export default function Notifications(
                             label="Notifications"
                         />
                         <IconButton
-                            label={NOTIFICATION_CLEAR}
+                            label={CLEAR_ALL}
                             onClicked={() => notifications.dismissAll()}
                         />
                         <togglebutton
                             active={createBinding(notifications, "dnd")}
                             class="icon"
                             label={createBinding(notifications, "dnd").as(
-                                (dnd) => (dnd ? BELL_OFF : BELL),
+                                (dnd) =>
+                                    dnd ? NOTIFICATIONS_OFF : NOTIFICATIONS,
                             )}
                             onToggled={({ active }) =>
                                 (notifications.dnd = active)

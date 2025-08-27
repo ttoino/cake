@@ -1,31 +1,25 @@
 import * as chars from "./chars";
 
 export const batteryIcons = [
-    chars.BATTERY_OUTLINE,
-    chars.BATTERY_10,
-    chars.BATTERY_20,
-    chars.BATTERY_30,
-    chars.BATTERY_40,
-    chars.BATTERY_50,
-    chars.BATTERY_60,
-    chars.BATTERY_70,
-    chars.BATTERY_80,
-    chars.BATTERY_90,
-    chars.BATTERY,
+    chars.BATTERY_0_BAR,
+    chars.BATTERY_1_BAR,
+    chars.BATTERY_2_BAR,
+    chars.BATTERY_3_BAR,
+    chars.BATTERY_4_BAR,
+    chars.BATTERY_5_BAR,
+    chars.BATTERY_6_BAR,
+    chars.BATTERY_FULL,
 ] as const;
 
 export const batteryChargingIcons = [
-    chars.BATTERY_CHARGING_OUTLINE,
-    chars.BATTERY_CHARGING_10,
+    chars.BATTERY_CHARGING_FULL,
     chars.BATTERY_CHARGING_20,
     chars.BATTERY_CHARGING_30,
-    chars.BATTERY_CHARGING_40,
     chars.BATTERY_CHARGING_50,
     chars.BATTERY_CHARGING_60,
-    chars.BATTERY_CHARGING_70,
     chars.BATTERY_CHARGING_80,
     chars.BATTERY_CHARGING_90,
-    chars.BATTERY_CHARGING_100,
+    chars.BATTERY_CHARGING_FULL,
 ] as const;
 
 export const brightnessIcons = [
@@ -35,33 +29,33 @@ export const brightnessIcons = [
 ] as const;
 
 export const volumeIcons = [
-    chars.VOLUME_LOW,
-    chars.VOLUME_MEDIUM,
-    chars.VOLUME_HIGH,
+    chars.VOLUME_MUTE,
+    chars.VOLUME_DOWN,
+    chars.VOLUME_UP,
 ] as const;
 
 export const wifiIcons = [
-    chars.WIFI_STRENGTH_OUTLINE,
-    chars.WIFI_STRENGTH_1,
-    chars.WIFI_STRENGTH_2,
-    chars.WIFI_STRENGTH_3,
-    chars.WIFI_STRENGTH_4,
+    chars.SIGNAL_WIFI_0_BAR,
+    chars.NETWORK_WIFI_1_BAR,
+    chars.NETWORK_WIFI_2_BAR,
+    chars.NETWORK_WIFI_3_BAR,
+    chars.SIGNAL_WIFI_4_BAR,
 ] as const;
 
 export const bluetoothIcons = {
     "audio-headphones": chars.HEADPHONES,
-    "audio-headset": chars.HEADSET,
+    "audio-headset": chars.HEADSET_MIC,
     "audio-speakers": chars.SPEAKER,
     "camera-photo": chars.CAMERA,
-    "camera-video": chars.VIDEO,
-    computer: chars.LAPTOP,
-    "input-gaming": chars.CONTROLLER,
+    "camera-video": chars.VIDEOCAM,
+    computer: chars.COMPUTER,
+    "input-gaming": chars.SPORTS_ESPORTS,
     "input-keyboard": chars.KEYBOARD,
     "input-mouse": chars.MOUSE,
-    phone: chars.CELLPHONE,
-    printer: chars.PRINTER,
+    phone: chars.MOBILE,
+    printer: chars.PRINT,
     scanner: chars.SCANNER,
-    "video-display": chars.VIDEO,
+    "video-display": chars.VIDEOCAM,
 } as const;
 
 export const iconRange = (icons: readonly string[], value: number) => {

@@ -3,8 +3,8 @@ import BluetoothService from "gi://AstalBluetooth";
 
 import {
     BLUETOOTH,
-    BLUETOOTH_CONNECT,
-    BLUETOOTH_OFF,
+    BLUETOOTH_CONNECTED,
+    BLUETOOTH_DISABLED,
     SEPARATOR,
 } from "../lib/chars";
 import { bluetoothIcon } from "../lib/icons";
@@ -21,12 +21,12 @@ const icon = createComputed(
             createComputed(
                 [createBinding(dev, "connected"), createBinding(dev, "icon")],
                 (connected, icon) =>
-                    connected ? bluetoothIcon(icon, BLUETOOTH_CONNECT) : "",
+                    connected ? bluetoothIcon(icon, BLUETOOTH_CONNECTED) : "",
             ),
         ),
     ],
     (isPowered, devices) =>
-        isPowered ? devices.join("") || BLUETOOTH : BLUETOOTH_OFF,
+        isPowered ? devices.join("") || BLUETOOTH : BLUETOOTH_DISABLED,
 );
 
 const tooltip = createComputed(

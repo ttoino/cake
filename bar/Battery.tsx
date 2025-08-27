@@ -27,6 +27,9 @@ export default function Battery() {
     return (
         <IconButton
             class="battery"
+            css={`
+                --battery: ${battery.percentage * 100};
+            `}
             label={icon}
             onClicked={() => togglePopup("battery")}
             tooltipText={tooltip}
