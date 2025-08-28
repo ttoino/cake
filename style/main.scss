@@ -2,10 +2,11 @@
 
 @use "theme/color" as *;
 
-@use "./components/button.scss";
+@use "components/button";
 @use "./components/entry.scss";
 @use "./components/slider.scss";
 @use "./components/switch.scss";
+@use "components/tooltip";
 
 @use "./widgets/device.scss";
 @use "./widgets/notification.scss";
@@ -34,18 +35,6 @@ window.background {
 
     > * {
         @include typography(body-medium);
-    }
-}
-
-tooltip.background {
-    border-radius: 4px;
-    padding: 0 8px;
-    min-height: 24px;
-    color: $inverse-on-surface;
-    background-color: $inverse-surface;
-
-    > * {
-        @include typography(body-small);
     }
 }
 

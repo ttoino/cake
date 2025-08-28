@@ -5,6 +5,7 @@
 @use "mixins/typography" as *;
 
 @use "theme/color" as *;
+@use "theme/shape" as *;
 
 button {
     @include state-layer;
@@ -71,11 +72,11 @@ button {
 
         &.square:not(:checked),
         &:not(.square).toggle:checked {
-            border-radius: 12px;
+            border-radius: $radius-medium;
         }
 
         &:active:active:active:active:active {
-            border-radius: 8px;
+            border-radius: $radius-small;
         }
     }
 
@@ -89,11 +90,11 @@ button {
 
     &.square:not(:checked),
     &:not(.square).toggle:checked {
-        border-radius: 12px;
+        border-radius: $radius-medium;
     }
 
     &:active:active:active:active:active {
-        border-radius: 8px;
+        border-radius: $radius-small;
     }
 
     &.medium {
@@ -106,11 +107,11 @@ button {
 
         &.square:not(:checked),
         &:not(.square).toggle:checked {
-            border-radius: 16px;
+            border-radius: $radius-large;
         }
 
         &:active:active:active:active:active {
-            border-radius: 12px;
+            border-radius: $radius-medium;
         }
     }
 
@@ -124,11 +125,11 @@ button {
 
         &.square:not(:checked),
         &:not(.square).toggle:checked {
-            border-radius: 28px;
+            border-radius: $radius-extra-large;
         }
 
         &:active:active:active:active:active {
-            border-radius: 16px;
+            border-radius: $radius-large;
         }
     }
 
@@ -142,11 +143,11 @@ button {
 
         &.square:not(:checked),
         &:not(.square).toggle:checked {
-            border-radius: 28px;
+            border-radius: $radius-extra-large;
         }
 
         &:active:active:active:active:active {
-            border-radius: 16px;
+            border-radius: $radius-large;
         }
     }
 

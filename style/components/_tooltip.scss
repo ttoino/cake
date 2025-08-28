@@ -1,0 +1,16 @@
+@use "mixins/typography" as *;
+
+@use "theme/color" as *;
+@use "theme/shape" as *;
+
+tooltip.background {
+    border-radius: $radius-extra-small;
+    padding: 0 8px;
+    min-height: 24px;
+    color: $inverse-on-surface;
+    background-color: $inverse-surface;
+
+    > * {
+        @include typography(body-small);
+    }
+}
