@@ -1,70 +1,98 @@
 @use "sass:color";
 
-@use "mixins/state_layer" as *;
+@use "theme/color" as *;
 
-@use "theme/catppuccin" as cp;
-@use "theme/color" as c;
-
+// TODO: Better way to handle inactive track
+// TODO: Indicators
 scale {
-    min-height: 16px;
+    padding: 0 2px;
 
-    trough {
-        border-radius: 8px;
-        background-color: color-mix(
-            in oklab,
-            var(--accent-color) 24%,
-            transparent
-        );
-    }
-
-    slider {
-        min-height: 16px;
-        min-width: 16px;
-    }
-}
-
-icon-slider {
-    font-size: 24px;
-    min-height: 32px;
-
-    trough {
-        border-radius: 16px;
-        background-color: color-mix(
-            in oklab,
-            var(--accent-color) 24%,
-            transparent
-        );
-    }
+    // trough {
+    // }
 
     highlight {
-        background-color: var(--accent-color);
+        background-color: $primary;
+        border-radius: 2px;
+        transform: translateX(-8px);
 
-        transform: scale(50%);
+        outline-color: $primary-container;
+        outline-style: solid;
+        outline-width: 999999px;
+        outline-offset: 16px;
     }
 
     slider {
-        min-height: 32px;
-        min-width: 32px;
+        background-color: $primary;
+        border-radius: 2px;
+        min-width: 4px;
     }
-}
 
-scale,
-icon-slider {
-    color: cp.$base;
+    // extra-small
+    margin: 14px 0;
 
-    trough,
-    highlight,
-    slider {
-        transition: background-color 0.3s;
+    trough {
+        min-height: 16px;
+        border-radius: 8px;
     }
 
     slider {
-        @include state-layer;
+        min-height: 44px;
+        margin: -14px -2px;
+    }
 
-        background-color: var(--accent-color);
-        border-radius: 50%;
-        border: none;
-        box-shadow: none;
-        margin: 0;
+    &.small {
+        margin: 10px 0;
+
+        trough {
+            min-height: 24px;
+            border-radius: 8px;
+        }
+
+        slider {
+            min-height: 44px;
+            margin: -10px -2px;
+        }
+    }
+
+    &.medium {
+        margin: 6px 0;
+
+        trough {
+            min-height: 40px;
+            border-radius: 12px;
+        }
+
+        slider {
+            min-height: 52px;
+            margin: -6px -2px;
+        }
+    }
+
+    &.large {
+        margin: 6px 0;
+
+        trough {
+            min-height: 56px;
+            border-radius: 16px;
+        }
+
+        slider {
+            min-height: 68px;
+            margin: -6px -2px;
+        }
+    }
+
+    &.extra-large {
+        margin: 6px 0;
+
+        trough {
+            min-height: 96px;
+            border-radius: 28px;
+        }
+
+        slider {
+            min-height: 108px;
+            margin: -6px -2px;
+        }
     }
 }
