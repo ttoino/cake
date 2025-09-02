@@ -20,10 +20,6 @@ $_primary-colors: (
     "lock": $yellow
 );
 
-@function alpha($color, $alpha) {
-    @return string.unquote("alpha(#{$color}, #{$alpha})");
-}
-
 $surface: $base;
 $on-surface: $text;
 $surface-variant: $overlay2;

@@ -4,8 +4,8 @@
 
 @use "components/button";
 @use "./components/entry.scss";
-@use "./components/slider.scss";
-@use "./components/switch.scss";
+@use "components/slider";
+@use "components/switch";
 @use "components/tooltip";
 
 @use "./widgets/device.scss";

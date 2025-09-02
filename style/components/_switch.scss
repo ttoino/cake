@@ -1,0 +1,54 @@
+@use "sass:color";
+@use "sass:math";
+
+@use "theme/color" as *;
+
+@mixin _handle-size($size) {
+    --size: #{math.div($size, 28px) * 100%};
+}
+
+switch {
+    background-color: $surface-container-highest;
+    border-radius: 16px;
+    border: solid 2px $outline;
+    min-height: 28px;
+    min-width: 48px;
+
+    transition-property: background-color, border-color;
+    transition-duration: 0.3s;
+
+    slider {
+        @include _handle-size(16px);
+        --color: #{$outline};
+
+        background-image: radial-gradient(
+            circle closest-side at center,
+            var(--color) var(--size),
+            transparent var(--size)
+        );
+        border-radius: 14px;
+        min-height: 28px;
+        min-width: 28px;
+
+        transition-property: background-image;
+        transition-duration: 0.3s;
+    }
+
+    image {
+        -gtk-icon-transform: scale(0);
+    }
+
+    &:checked {
+        background-color: $primary;
+        border-color: $primary;
+
+        slider {
+            @include _handle-size(24px);
+            --color: #{$on-primary};
+        }
+    }
+
+    &:active slider {
+        @include _handle-size(28px);
+    }
+}
