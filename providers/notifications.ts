@@ -1,5 +1,5 @@
 import { getter, register, setter, signal } from "ags/gobject";
-import { Time, timeout } from "ags/time";
+import { timeout, Timer } from "ags/time";
 import Notifd from "gi://AstalNotifd";
 import GObject from "gi://GObject?version=2.0";
 
@@ -36,7 +36,7 @@ export default class Notifications extends GObject.Object {
 
     private _stored: Set<number> = new Set();
 
-    private _timeouts: Map<number, Time> = new Map();
+    private _timeouts: Map<number, Timer> = new Map();
     constructor() {
         super();
 
