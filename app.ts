@@ -9,24 +9,21 @@ app.start({
     main() {
         windows.init();
     },
-    requestHandler(request, res) {
-        const args = request.split(/\s+/);
-        const [action, ...params] = args;
-
+    requestHandler([action, ...params], res) {
         switch (action.toLowerCase()) {
             case "popup": {
-                const [subaction, ...popup] = params;
+                const [subaction, popup] = params;
 
                 switch (subaction.toLowerCase()) {
                     case "dismiss":
-                        windows.dismissPopup();
+                        popups.dismissPopup();
                         return res("Dismissed popups");
                     case "show":
-                        windows.showPopup(popup.join(" "));
-                        return res(`Showed ${popup.join(" ")}`);
+                        popups.showPopup(popup);
+                        return res(`Showed ${popup}`);
                     case "toggle":
-                        windows.togglePopup(popup.join(" "));
-                        return res(`Toggled ${popup.join(" ")}`);
+                        popups.togglePopup(popup);
+                        return res(`Toggled ${popup}`);
                 }
                 return res("Invalid popup action");
             }
