@@ -26,6 +26,14 @@ declare module "gi://Adw?version=1" {
     const init: () => void;
 }
 
+declare module "gi://Adw" {
+    class ToggleGroup {
+        active: string;
+        active_name: string;
+        activeName: string;
+    }
+}
+
 declare module "gi://AstalTray" {
     class Tray {
         items: unknown[];
