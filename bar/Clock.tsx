@@ -1,18 +1,19 @@
 import { SEPARATOR } from "../lib/chars";
 import date from "../providers/date";
-import { togglePopup } from "../services/windows";
+import SidebarButton, { SidebarButtonProps } from "./SidebarButton";
 
 const label = date.as(
     (date) =>
         `${date.hour}:${date.minute} ${SEPARATOR} ${date.day}/${date.month}/${date.year}`,
 );
 
-export default function Clock() {
+export default function Clock(props: Omit<SidebarButtonProps, "route">) {
     return (
-        <button
+        <SidebarButton
+            class="clock"
             label={label}
-            name="clock"
-            onClicked={() => togglePopup("calendar")}
+            route="calendar"
+            {...props}
         />
     );
 }

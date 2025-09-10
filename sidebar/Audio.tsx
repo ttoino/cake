@@ -1,6 +1,5 @@
 import { Accessor, createBinding, createComputed, For } from "ags";
-import { Astal, Gtk } from "ags/gtk4";
-import app from "ags/gtk4/app";
+import { Gtk } from "ags/gtk4";
 import Wp from "gi://AstalWp";
 
 import {
@@ -12,9 +11,11 @@ import {
 } from "../lib/chars";
 import { volumeRange } from "../lib/icons";
 import { createDefaultBinding } from "../lib/state";
-import ExpandableWindow from "../widgets/ExpandableWindow";
+import Button from "../widgets/Button";
+import IconButton from "../widgets/IconButton";
 import IconSlider from "../widgets/IconSlider";
 import ScrollText from "../widgets/ScrollText";
+import ToggleIconButton from "../widgets/ToggleIconButton";
 
 const audio = Wp.get_default()?.audio;
 
@@ -42,9 +43,8 @@ const MuteButton = ({
     device: Wp.Endpoint;
     isSpeaker: boolean;
 }) => (
-    <togglebutton
+    <ToggleIconButton
         active={createBinding(device, "mute")}
-        class="icon"
         label={createComputed(
             [createBinding(device, "mute"), createBinding(device, "volume")],
             (mute, volume) =>
@@ -86,12 +86,10 @@ const Device = ({
     }) => (
         <box spacing={8}>
             <ScrollText label={title} />
-            <button
-                class="icon"
+            <IconButton
+                label={icon}
                 onClicked={() => (stack.visibleChildName = next)}
-            >
-                {icon}
-            </button>
+            />
         </box>
     );
 
@@ -142,7 +140,7 @@ const Device = ({
                 <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
                     <For each={devices}>
                         {(device) => (
-                            <button
+                            <Button
                                 class="device"
                                 onClicked={() => {
                                     setSelectedDevice(device);
@@ -158,7 +156,7 @@ const Device = ({
                                             description ?? "Unknown",
                                     )}
                                 />
-                            </button>
+                            </Button>
                         )}
                     </For>
                 </box>
@@ -167,69 +165,35 @@ const Device = ({
     );
 };
 
-const AudioContent = ({
-    collapseButton,
-    ...props
-}: {
-    $type: "named";
-    collapseButton: JSX.Element;
-    name: "expanded";
-}) => {
+const Audio = (props: JSX.IntrinsicElements["box"]) => {
     if (!audio) return <></>;
 
     return (
-        <scrolledwindow
-            hscrollbarPolicy={Gtk.PolicyType.NEVER}
-            vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
-            {...props}
-        >
-            <box orientation={Gtk.Orientation.VERTICAL} spacing={16}>
-                <box spacing={16}>
-                    {collapseButton}
-                    <label
-                        halign={Gtk.Align.START}
-                        hexpand
-                        justify={Gtk.Justification.LEFT}
-                        label="Audio"
-                    />
-                </box>
-                <Device
-                    devices={createBinding(audio, "speakers")}
-                    isSpeaker
-                    selectedDevice={audio.defaultSpeaker}
-                    setSelectedDevice={() => {}}
-                />
-                <Device
-                    devices={createBinding(audio, "microphones")}
-                    isSpeaker={false}
-                    selectedDevice={audio.defaultMicrophone}
-                    setSelectedDevice={() => {}}
+        <box orientation={Gtk.Orientation.VERTICAL} spacing={16} {...props}>
+            <box spacing={16}>
+                <label
+                    halign={Gtk.Align.START}
+                    hexpand
+                    justify={Gtk.Justification.LEFT}
+                    label="Audio"
                 />
             </box>
-        </scrolledwindow>
+            <Device
+                devices={createBinding(audio, "speakers")}
+                isSpeaker
+                selectedDevice={audio.defaultSpeaker}
+                setSelectedDevice={() => {}}
+            />
+            <Device
+                devices={createBinding(audio, "microphones")}
+                isSpeaker={false}
+                selectedDevice={audio.defaultMicrophone}
+                setSelectedDevice={() => {}}
+            />
+        </box>
     );
 };
 
-export default function Audio(props: Partial<JSX.IntrinsicElements["window"]>) {
-    if (!audio) return <></>;
-
-    return (
-        <window
-            anchor={Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT}
-            application={app}
-            margin={16}
-            name="audio"
-            {...props}
-        >
-            <ExpandableWindow
-                collapsed={
-                    <>
-                        <VolumeSlider device={audio.defaultSpeaker} isSpeaker />
-                        <MuteButton device={audio.defaultSpeaker} isSpeaker />
-                    </>
-                }
-                expanded={AudioContent}
-            />
-        </window>
-    );
-}
+export default {
+    audio: Audio,
+};

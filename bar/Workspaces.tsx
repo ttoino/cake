@@ -6,32 +6,38 @@ import {
     RADIO_BUTTON_PARTIAL,
     RADIO_BUTTON_UNCHECKED,
 } from "../lib/chars";
-import IconButton from "../widgets/IconButton";
+import ButtonGroup, { type ButtonGroupProps } from "../widgets/ButtonGroup";
+import ToggleIconButton from "../widgets/ToggleIconButton";
 
 const hyprland = Hyprland.get_default();
 
 const WORKSPACE_COUNT = 10;
 
-const workspaces = createComputed(
-    [
-        createBinding(hyprland, "workspaces"),
-        createBinding(hyprland, "focusedMonitor"),
-    ],
-    (wss, monitor) =>
-        Array.from(
-            { length: WORKSPACE_COUNT },
-            (_, i) =>
-                wss.find((ws) => ws.id === i + 1) ??
-                Hyprland.Workspace.dummy(i + 1, monitor),
-        ),
+const workspaces = createBinding(hyprland, "workspaces").as((wss) =>
+    Array.from(
+        { length: WORKSPACE_COUNT },
+        (_, i) =>
+            wss.find((ws) => ws.id === i + 1) ??
+            Hyprland.Workspace.dummy(i + 1, null),
+    ),
 );
 
-export default function Workspaces() {
+export default function Workspaces(props: Partial<ButtonGroupProps>) {
     return (
-        <box class="workspaces" spacing={4}>
+        <ButtonGroup
+            class="workspaces"
+            size="extra-small"
+            type="connected"
+            variant="tonal"
+            {...props}
+        >
             <For each={workspaces}>
                 {(ws) => (
-                    <IconButton
+                    <ToggleIconButton
+                        active={createBinding(hyprland, "focusedWorkspace").as(
+                            (fw) => fw.id === ws.id,
+                        )}
+                        class="workspace"
                         label={createComputed(
                             [
                                 createBinding(hyprland, "focusedWorkspace"),
@@ -50,6 +56,6 @@ export default function Workspaces() {
                     />
                 )}
             </For>
-        </box>
+        </ButtonGroup>
     );
 }

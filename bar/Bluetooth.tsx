@@ -9,8 +9,9 @@ import {
 } from "../lib/chars";
 import { bluetoothIcon } from "../lib/icons";
 import { createArrayBinding } from "../lib/state";
-import { togglePopup } from "../services/windows";
-import IconButton from "../widgets/IconButton";
+import SidebarIconButton, {
+    type SidebarIconButtonProps,
+} from "./SidebarIconButton";
 
 const bluetooth = BluetoothService.get_default();
 
@@ -55,13 +56,16 @@ const tooltip = createComputed(
             : "Bluetooth off",
 );
 
-export default function Bluetooth() {
+export default function Bluetooth(
+    props: Omit<SidebarIconButtonProps, "route">,
+) {
     return (
-        <IconButton
+        <SidebarIconButton
             class="bluetooth"
             label={icon}
-            onClicked={() => togglePopup("bluetooth")}
+            route="bluetooth"
             tooltipText={tooltip}
+            {...props}
         />
     );
 }

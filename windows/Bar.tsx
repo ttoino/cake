@@ -10,10 +10,14 @@ import Media from "../bar/Media";
 import Network from "../bar/Network";
 import Notifications from "../bar/Notifications";
 import Workspaces from "../bar/Workspaces";
+import { SomeRequired } from "../lib/types";
 import ButtonGroup from "../widgets/ButtonGroup";
 import Layer, { type LayerProps } from "../widgets/Layer";
 
-export default function Bar(props: LayerProps) {
+export default function Bar({
+    gdkmonitor,
+    ...props
+}: SomeRequired<LayerProps, "gdkmonitor">) {
     return (
         <Layer
             anchor={
@@ -23,6 +27,7 @@ export default function Bar(props: LayerProps) {
             }
             canFocus={false}
             exclusivity={Astal.Exclusivity.EXCLUSIVE}
+            gdkmonitor={gdkmonitor}
             {...props}
         >
             <centerbox>
@@ -37,14 +42,14 @@ export default function Bar(props: LayerProps) {
                     type="connected"
                     variant="tonal"
                 >
-                    <Media />
-                    <Audio />
-                    <Brightness />
-                    <Bluetooth />
-                    <Network />
-                    <Battery />
-                    <Notifications />
-                    <Clock />
+                    <Media gdkmonitor={gdkmonitor} />
+                    <Audio gdkmonitor={gdkmonitor} />
+                    <Bluetooth gdkmonitor={gdkmonitor} />
+                    <Network gdkmonitor={gdkmonitor} />
+                    <Battery gdkmonitor={gdkmonitor} />
+                    <Brightness gdkmonitor={gdkmonitor} />
+                    <Notifications gdkmonitor={gdkmonitor} />
+                    <Clock gdkmonitor={gdkmonitor} />
                 </ButtonGroup>
             </centerbox>
         </Layer>

@@ -3,12 +3,11 @@ import NetworkService from "gi://AstalNetwork";
 
 import { SEPARATOR, WEB_OFF } from "../lib/chars";
 import { wifiRange } from "../lib/icons";
-import { togglePopup } from "../services/windows";
-import IconButton from "../widgets/IconButton";
+import SidebarIconButton, { SidebarIconButtonProps } from "./SidebarIconButton";
 
 const network = NetworkService.get_default();
 
-const icons = createComputed(
+const label = createComputed(
     [
         // bind(network.wired, "state"),
         createBinding(network.wifi, "state"),
@@ -54,13 +53,14 @@ const tooltip = createComputed(
     },
 );
 
-export default function Network() {
+export default function Network(props: Omit<SidebarIconButtonProps, "route">) {
     return (
-        <IconButton
+        <SidebarIconButton
             class="network"
-            label={icons}
-            onClicked={() => togglePopup("network")}
+            label={label}
+            route="network"
             tooltipText={tooltip}
+            {...props}
         />
     );
 }

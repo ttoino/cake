@@ -77,7 +77,10 @@ export const volumeRange = (volume: number) => iconRange(volumeIcons, volume);
 export const wifiRange = (strength: number) =>
     iconRange(wifiIcons, strength / 100);
 
-export const bluetoothIcon = (icon: string, fallback?: string) =>
+export const bluetoothIcon = <F extends string | undefined>(
+    icon: string,
+    fallback: F,
+) =>
     icon in bluetoothIcons
         ? bluetoothIcons[icon as keyof typeof bluetoothIcons]
         : fallback;

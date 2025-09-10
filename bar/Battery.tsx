@@ -3,8 +3,7 @@ import BatteryService from "gi://AstalBattery";
 
 import { SEPARATOR } from "../lib/chars";
 import { batteryRange } from "../lib/icons";
-import { togglePopup } from "../services/windows";
-import IconButton from "../widgets/IconButton";
+import SidebarIconButton, { SidebarIconButtonProps } from "./SidebarIconButton";
 
 const battery = BatteryService.get_default();
 
@@ -23,16 +22,17 @@ const tooltip = createComputed(
     },
 );
 
-export default function Battery() {
+export default function Battery(props: Omit<SidebarIconButtonProps, "route">) {
     return (
-        <IconButton
+        <SidebarIconButton
             class="battery"
             css={`
                 --battery: ${battery.percentage * 100};
             `}
             label={icon}
-            onClicked={() => togglePopup("battery")}
+            route="system"
             tooltipText={tooltip}
+            {...props}
         />
     );
 }

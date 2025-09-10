@@ -1,0 +1,19 @@
+window.main {
+    .corners {
+        background-color: transparent;
+        border-radius: 32px;
+        box-shadow: black 0 0 0 100px;
+    }
+
+    revealer.sidebar {
+        background-color: #000;
+
+        > scrolledwindow {
+            min-width: 360px;
+
+            > viewport > stack > * {
+                margin: 16px;
+            }
+        }
+    }
+}

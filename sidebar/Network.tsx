@@ -1,6 +1,5 @@
 import { createBinding, createComputed, For } from "ags";
-import { Astal, Gtk } from "ags/gtk4";
-import app from "ags/gtk4/app";
+import { Gtk } from "ags/gtk4";
 import NetworkService from "gi://AstalNetwork";
 
 import { wifiRange } from "../lib/icons";
@@ -85,27 +84,16 @@ const Wifi = () => {
     );
 };
 
-export default function Network(
-    props: Partial<JSX.IntrinsicElements["window"]>,
-) {
-    return (
-        <window
-            anchor={Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT}
-            application={app}
-            margin={16}
-            name="network"
-            {...props}
-        >
-            <scrolledwindow
-                class="network-window info-window"
-                hscrollbarPolicy={Gtk.PolicyType.NEVER}
-                vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
-            >
-                <box orientation={Gtk.Orientation.VERTICAL} spacing={16}>
-                    <Ethernet />
-                    <Wifi />
-                </box>
-            </scrolledwindow>
-        </window>
-    );
-}
+const Network = (props: JSX.IntrinsicElements["box"]) => (
+    <box
+        class="network"
+        orientation={Gtk.Orientation.VERTICAL}
+        spacing={16}
+        {...props}
+    >
+        <Ethernet />
+        <Wifi />
+    </box>
+);
+
+export default { network: Network };

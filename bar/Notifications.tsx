@@ -6,8 +6,7 @@ import {
     NOTIFICATIONS_UNREAD,
 } from "../lib/chars";
 import NotificationsProvider from "../providers/notifications";
-import { togglePopup } from "../services/windows";
-import IconButton from "../widgets/IconButton";
+import SidebarIconButton, { SidebarIconButtonProps } from "./SidebarIconButton";
 
 const notifications = NotificationsProvider.get_default();
 
@@ -15,7 +14,7 @@ const count = createBinding(notifications, "storage").as(
     (storage) => storage.length,
 );
 
-const icon = createComputed(
+const label = createComputed(
     [createBinding(notifications, "dnd"), count],
     (dnd, count) =>
         dnd
@@ -34,13 +33,16 @@ const tooltip = createComputed(
               : "No notifications",
 );
 
-export default function Notifications() {
+export default function Notifications(
+    props: Omit<SidebarIconButtonProps, "route">,
+) {
     return (
-        <IconButton
+        <SidebarIconButton
             class="notifications"
-            label={icon}
-            onClicked={() => togglePopup("notifications")}
+            label={label}
+            route="notifications"
             tooltipText={tooltip}
+            {...props}
         />
     );
 }

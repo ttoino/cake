@@ -4,20 +4,20 @@
 
 $_primary-colors: (
     // Info windows
-    "audio": $pink,
-    "battery": $green,
-    "battery.discharging": $peach,
-    "battery.critical": $red,
-    "bluetooth": $blue,
-    "brightness": $yellow,
-    "network": $sapphire,
+    media: $red,
+    audio: $pink,
+    bluetooth: $blue,
+    network: $sapphire,
+    battery: $green,
+    brightness: $yellow,
+    notifications: $peach,
 
     // Power
-    "shutdown": $red,
-    "restart": $green,
-    "sleep": $blue,
-    "hibernate": $sapphire,
-    "lock": $yellow
+    shutdown: $red,
+    lock: $yellow,
+    restart: $green,
+    hibernate: $sapphire,
+    sleep: $mauve
 );
 
 $surface: $base;

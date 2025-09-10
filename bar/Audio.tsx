@@ -1,10 +1,9 @@
 import { createBinding, createComputed } from "ags";
 import Wp from "gi://AstalWp";
 
-import { SEPARATOR, VOLUME_MUTE } from "../lib/chars";
+import { NO_SOUND, SEPARATOR } from "../lib/chars";
 import { volumeRange } from "../lib/icons";
-import { togglePopup } from "../services/windows";
-import IconButton from "../widgets/IconButton";
+import SidebarIconButton, { SidebarIconButtonProps } from "./SidebarIconButton";
 
 const audio = Wp.get_default();
 
@@ -12,17 +11,17 @@ const icon =
     audio &&
     createComputed(
         [
-            createBinding(audio.default_speaker, "mute"),
+            createBinding(audio.defaultSpeaker, "mute"),
             createBinding(audio.defaultSpeaker, "volume"),
         ],
-        (mute, volume) => (mute ? VOLUME_MUTE : volumeRange(volume)),
+        (mute, volume) => (mute ? NO_SOUND : volumeRange(volume)),
     );
 const tooltip =
     audio &&
     createComputed(
         [
-            createBinding(audio.default_speaker, "description"),
-            createBinding(audio.default_speaker, "mute"),
+            createBinding(audio.defaultSpeaker, "description"),
+            createBinding(audio.defaultSpeaker, "mute"),
             createBinding(audio.defaultSpeaker, "volume"),
         ],
         (description, mute, volume) => {
@@ -34,15 +33,16 @@ const tooltip =
         },
     );
 
-export default function Audio() {
+export default function Audio(props: Omit<SidebarIconButtonProps, "route">) {
     if (!audio || !icon || !tooltip) return <></>;
 
     return (
-        <IconButton
+        <SidebarIconButton
             class="audio"
             label={icon}
-            onClicked={() => togglePopup("audio")}
+            route="audio"
             tooltipText={tooltip}
+            {...props}
         />
     );
 }

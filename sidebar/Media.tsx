@@ -1,11 +1,11 @@
 import { createBinding, createComputed, createState, For } from "ags";
-import { Astal, Gtk } from "ags/gtk4";
-import app from "ags/gtk4/app";
+import { Gtk } from "ags/gtk4";
 import Mpris from "gi://AstalMpris";
 
 import { PAUSE, PLAY_ARROW, SKIP_NEXT, SKIP_PREVIOUS } from "../lib/chars";
 import { ascending } from "../lib/sorting";
 import { createBooleanBinding, createDefaultBinding } from "../lib/state";
+import ButtonGroup from "../widgets/ButtonGroup";
 import IconButton from "../widgets/IconButton";
 import ScrollText from "../widgets/ScrollText";
 
@@ -44,29 +44,28 @@ const Player = (player: Mpris.Player, onChoose: () => void) => (
                 visible={createBooleanBinding(player, "artist")}
             />
         </box>
-        <box halign={Gtk.Align.CENTER} spacing={16}>
+        <ButtonGroup halign={Gtk.Align.CENTER} variant="tonal">
             <IconButton
-                class="lg"
                 label={SKIP_PREVIOUS}
                 onClicked={() => player.previous()}
-                valign={Gtk.Align.CENTER}
+                width="narrow"
             />
             <IconButton
-                class="xl"
                 label={createBinding(player, "playbackStatus").as((status) =>
                     status === Mpris.PlaybackStatus.PLAYING
                         ? PAUSE
                         : PLAY_ARROW,
                 )}
                 onClicked={() => player.play_pause()}
+                variant="filled"
+                width="wide"
             />
             <IconButton
-                class="lg"
                 label={SKIP_NEXT}
                 onClicked={() => player.next()}
-                valign={Gtk.Align.CENTER}
+                width="narrow"
             />
-        </box>
+        </ButtonGroup>
         <slider
             max={createBinding(player, "length")}
             onNotifyValue={({ value }) => player.set_position(value)}
@@ -76,7 +75,7 @@ const Player = (player: Mpris.Player, onChoose: () => void) => (
     </box>
 );
 
-export default function Media(props: Partial<JSX.IntrinsicElements["window"]>) {
+const Media = (props: JSX.IntrinsicElements["stack"]) => {
     const [visible, setVisible] = createState("_choose");
 
     const players = createBinding(mpris, "players").as((players) =>
@@ -88,39 +87,34 @@ export default function Media(props: Partial<JSX.IntrinsicElements["window"]>) {
     );
 
     return (
-        <window
-            anchor={Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT}
-            application={app}
-            margin={16}
-            name="media"
+        <stack
+            class="media-window info-window"
+            transitionType={Gtk.StackTransitionType.CROSSFADE}
+            visibleChildName={visible}
             {...props}
         >
-            <stack
-                class="media-window info-window"
-                transitionType={Gtk.StackTransitionType.CROSSFADE}
-                visibleChildName={visible}
+            <box
+                $type="named"
+                name="_choose"
+                orientation={Gtk.Orientation.VERTICAL}
+                spacing={8}
             >
-                <box
-                    $type="named"
-                    name="_choose"
-                    orientation={Gtk.Orientation.VERTICAL}
-                    spacing={8}
-                >
-                    <label label="Choose a player" />
-                    <For each={players}>
-                        {(player) => (
-                            <button
-                                label={createBinding(player, "identity")}
-                                onClicked={() => setVisible(player.busName)}
-                            />
-                        )}
-                    </For>
-                </box>
-
+                <label label="Choose a player" />
                 <For each={players}>
-                    {(player) => Player(player, () => setVisible("_choose"))}
+                    {(player) => (
+                        <button
+                            label={createBinding(player, "identity")}
+                            onClicked={() => setVisible(player.busName)}
+                        />
+                    )}
                 </For>
-            </stack>
-        </window>
+            </box>
+
+            <For each={players}>
+                {(player) => Player(player, () => setVisible("_choose"))}
+            </For>
+        </stack>
     );
-}
+};
+
+export default { media: Media };
