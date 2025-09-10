@@ -1,4 +1,6 @@
 @use "sass:color";
+@use "sass:selector";
+@use "sass:string";
 
 @use "mixins/elevation" as *;
 @use "mixins/state_layer" as *;
@@ -6,6 +8,21 @@
 
 @use "theme/color" as *;
 @use "theme/shape" as *;
+
+@mixin group-default($selector, $default: false) {
+    $s: string.unquote($selector);
+
+    &#{selector.append($selector, $selector, $selector)},
+    box.button-group#{$selector} & {
+        @content;
+    }
+
+    @if $default {
+        & {
+            @content;
+        }
+    }
+}
 
 button {
     @include state-layer;
@@ -15,7 +32,7 @@ button {
         box-shadow;
     transition-duration: 0.3s;
 
-    &.elevated {
+    @include group-default(".elevated") {
         @include elevation(1);
 
         background-color: $surface-container-low;
@@ -27,7 +44,7 @@ button {
         }
     }
 
-    &.filled {
+    @include group-default(".filled") {
         background-color: $primary;
         color: $on-primary;
 
@@ -37,7 +54,7 @@ button {
         }
     }
 
-    &.tonal {
+    @include group-default(".tonal") {
         background-color: $primary-container;
         color: $on-primary-container;
 
@@ -47,7 +64,7 @@ button {
         }
     }
 
-    &.outlined {
+    @include group-default(".outlined") {
         border-style: solid;
         border-color: $outline-variant;
         color: $on-surface-variant;
@@ -59,10 +76,11 @@ button {
         }
     }
 
-    // Text
-    color: $primary;
+    @include group-default(".text", $default: true) {
+        color: $primary;
+    }
 
-    &.extra-small {
+    @include group-default(".extra-small") {
         @include typography(label-large);
 
         border-radius: 16px;
@@ -70,34 +88,35 @@ button {
         min-height: 32px;
         padding: 0 12px;
 
-        &.square:not(:checked),
-        &:not(.square).toggle:checked {
-            border-radius: $radius-medium;
-        }
+        // &.square:not(:checked),
+        // &:not(.square).toggle:checked {
+        //     border-radius: $radius-medium;
+        // }
 
         &:active:active:active:active:active {
             border-radius: $radius-small;
         }
     }
 
-    // Small
-    @include typography(label-large);
+    @include group-default(".small", $default: true) {
+        @include typography(label-large);
 
-    border-radius: 20px;
-    border-width: 1px;
-    min-height: 40px;
-    padding: 0 16px;
+        border-radius: 20px;
+        border-width: 1px;
+        min-height: 40px;
+        padding: 0 16px;
 
-    &.square:not(:checked),
-    &:not(.square).toggle:checked {
-        border-radius: $radius-medium;
+        // &.square:not(:checked),
+        // &:not(.square).toggle:checked {
+        //     border-radius: $radius-medium;
+        // }
+
+        &:active:active:active:active:active {
+            border-radius: $radius-small;
+        }
     }
 
-    &:active:active:active:active:active {
-        border-radius: $radius-small;
-    }
-
-    &.medium {
+    @include group-default(".medium") {
         @include typography(title-medium);
 
         border-radius: 28px;
@@ -105,17 +124,17 @@ button {
         min-height: 56px;
         padding: 0 24px;
 
-        &.square:not(:checked),
-        &:not(.square).toggle:checked {
-            border-radius: $radius-large;
-        }
+        // &.square:not(:checked),
+        // &:not(.square).toggle:checked {
+        //     border-radius: $radius-large;
+        // }
 
         &:active:active:active:active:active {
             border-radius: $radius-medium;
         }
     }
 
-    &.large {
+    @include group-default(".large") {
         @include typography(headline-small);
 
         border-radius: 48px;
@@ -123,17 +142,17 @@ button {
         min-height: 96px;
         padding: 0 48px;
 
-        &.square:not(:checked),
-        &:not(.square).toggle:checked {
-            border-radius: $radius-extra-large;
-        }
+        // &.square:not(:checked),
+        // &:not(.square).toggle:checked {
+        //     border-radius: $radius-extra-large;
+        // }
 
         &:active:active:active:active:active {
             border-radius: $radius-large;
         }
     }
 
-    &.extra-large {
+    @include group-default(".extra-large") {
         @include typography(headline-large);
 
         border-radius: 68px;
@@ -141,10 +160,10 @@ button {
         min-height: 136px;
         padding: 0 64px;
 
-        &.square:not(:checked),
-        &:not(.square).toggle:checked {
-            border-radius: $radius-extra-large;
-        }
+        // &.square:not(:checked),
+        // &:not(.square).toggle:checked {
+        //     border-radius: $radius-extra-large;
+        // }
 
         &:active:active:active:active:active {
             border-radius: $radius-large;
@@ -154,7 +173,7 @@ button {
     &.icon {
         line-height: 1;
 
-        &.filled {
+        @include group-default(".filled") {
             color: $on-primary;
 
             &.toggle:checked {
@@ -162,7 +181,7 @@ button {
             }
         }
 
-        &.tonal {
+        @include group-default(".tonal") {
             color: $on-primary-container;
 
             &.toggle:checked {
@@ -170,18 +189,21 @@ button {
             }
         }
 
-        &.outlined.toggle:checked {
-            color: $inverse-on-surface;
+        @include group-default(".outlined") {
+            &.toggle:checked {
+                color: $inverse-on-surface;
+            }
         }
 
-        // Text
-        color: $on-surface-variant;
+        @include group-default(".text", $default: true) {
+            color: $on-surface-variant;
 
-        &.toggle:checked {
-            color: $primary;
+            &.toggle:checked {
+                color: $primary;
+            }
         }
 
-        &.extra-small {
+        @include group-default(".extra-small") {
             &.narrow {
                 padding: 0 4px;
             }
@@ -194,19 +216,20 @@ button {
             }
         }
 
-        // Small
-        &.narrow {
-            padding: 0 4px;
+        @include group-default(".small", $default: true) {
+            &.narrow {
+                padding: 0 4px;
+            }
+
+            font-size: 24px;
+            padding: 0 8px;
+
+            &.wide {
+                padding: 0 14px;
+            }
         }
 
-        font-size: 24px;
-        padding: 0 8px;
-
-        &.wide {
-            padding: 0 14px;
-        }
-
-        &.medium {
+        @include group-default(".medium") {
             &.narrow {
                 padding: 0 12px;
             }
@@ -219,7 +242,7 @@ button {
             }
         }
 
-        &.large {
+        @include group-default(".large") {
             &.narrow {
                 padding: 0 16px;
             }
@@ -232,7 +255,7 @@ button {
             }
         }
 
-        &.extra-large {
+        @include group-default(".extra-large") {
             &.narrow {
                 padding: 0 32px;
             }

@@ -1,0 +1,88 @@
+@use "mixins/gap" as *;
+
+@use "theme/shape" as *;
+
+box.button-group {
+    &,
+    &.standard {
+        &.extra-small {
+            @include gap(18px);
+        }
+
+        &,
+        &.small {
+            @include gap(12px);
+        }
+
+        &.medium,
+        &.large,
+        &.extra-large {
+            @include gap(8px);
+        }
+    }
+
+    &.connected {
+        @include gap(2px);
+
+        // round
+        button.toggle {
+            &:not(:last-child) {
+                border-bottom-right-radius: var(--radius);
+                border-top-right-radius: var(--radius);
+            }
+            &:not(:first-child) {
+                border-bottom-left-radius: var(--radius);
+                border-top-left-radius: var(--radius);
+            }
+
+            &:checked {
+                &.extra-small {
+                    border-radius: 16px;
+                }
+
+                &,
+                &.small {
+                    border-radius: 20px;
+                }
+
+                &.medium {
+                    border-radius: 28px;
+                }
+
+                &.large {
+                    border-radius: 48px;
+                }
+
+                &.extra-large {
+                    border-radius: 68px;
+                }
+            }
+        }
+
+        &.square button.toggle,
+        button.toggle.square {
+            border-radius: var(--radius);
+        }
+
+        &.extra-small {
+            --radius: #{$radius-extra-small};
+        }
+
+        &,
+        &.small {
+            --radius: #{$radius-small};
+        }
+
+        &.medium {
+            --radius: #{$radius-small};
+        }
+
+        &.large {
+            --radius: #{$radius-large};
+        }
+
+        &.extra-large {
+            --radius: #{$radius-large-increased};
+        }
+    }
+}
