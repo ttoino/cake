@@ -1,5 +1,4 @@
 import { Astal, Gdk, Gtk } from "ags/gtk4";
-import app from "ags/gtk4/app";
 
 import {
     LOCK,
@@ -9,8 +8,10 @@ import {
     RESTART_ALT,
 } from "../lib/chars";
 import PowerService from "../providers/power";
-import { dismissPopup } from "../services/windows";
+import { dismissPopup } from "../services/popups";
+import ButtonGroup from "../widgets/ButtonGroup";
 import IconButton from "../widgets/IconButton";
+import Layer, { LayerProps } from "../widgets/Layer";
 
 const power = PowerService.get_default();
 
@@ -57,7 +58,6 @@ const actions = [
 const ActionButton = ({ action, icon, name }: Action) => (
     <box class={name}>
         <IconButton
-            class="xl"
             onClicked={() => {
                 dismissPopup();
                 action();
@@ -68,21 +68,18 @@ const ActionButton = ({ action, icon, name }: Action) => (
     </box>
 );
 
-export default function Power(props: Partial<JSX.IntrinsicElements["window"]>) {
+export default function Power(props: LayerProps) {
     return (
-        <window
+        <Layer
             anchor={
                 Astal.WindowAnchor.BOTTOM |
                 Astal.WindowAnchor.LEFT |
                 Astal.WindowAnchor.RIGHT |
                 Astal.WindowAnchor.TOP
             }
-            application={app}
-            class="power-window"
             exclusivity={Astal.Exclusivity.IGNORE}
             keymode={Astal.Keymode.EXCLUSIVE}
             layer={Astal.Layer.OVERLAY}
-            name="power"
             {...props}
         >
             <Gtk.EventControllerKey
@@ -96,10 +93,14 @@ export default function Power(props: Partial<JSX.IntrinsicElements["window"]>) {
             />
 
             <box halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER}>
-                <box class="power-controls" spacing={16}>
+                <ButtonGroup
+                    class="power-controls"
+                    size="large"
+                    variant="tonal"
+                >
                     {actions.map(ActionButton)}
-                </box>
+                </ButtonGroup>
             </box>
-        </window>
+        </Layer>
     );
 }

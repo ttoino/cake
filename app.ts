@@ -1,13 +1,15 @@
 import app from "ags/gtk4/app";
 
 import "./services/notifications";
-import * as windows from "./services/windows";
+import * as layers from "./services/layers";
+import * as popups from "./services/popups";
 import style from "./style/main.scss";
 
 app.start({
     css: style,
     main() {
-        windows.init();
+        layers.init();
+        popups.init();
     },
     requestHandler([action, ...params], res) {
         switch (action.toLowerCase()) {

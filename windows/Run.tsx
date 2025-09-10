@@ -1,10 +1,10 @@
 import { createState, For } from "ags";
 import { Astal, Gtk } from "ags/gtk4";
-import app from "ags/gtk4/app";
 import { execAsync } from "ags/process";
 import Apps from "gi://AstalApps";
 
-import { dismissPopup } from "../services/windows";
+import { dismissPopup } from "../services/popups";
+import Layer, { type LayerProps } from "../widgets/Layer";
 
 const apps = new Apps.Apps();
 
@@ -27,24 +27,21 @@ const AppEntry = ({
     </button>
 );
 
-export default function Run(props: Partial<JSX.IntrinsicElements["window"]>) {
+export default function Run(props: LayerProps) {
     let entry: Gtk.Entry;
     const [appList, setAppList] = createState([] as Apps.Application[]);
 
     return (
-        <window
+        <Layer
             anchor={
                 Astal.WindowAnchor.BOTTOM |
                 Astal.WindowAnchor.LEFT |
                 Astal.WindowAnchor.RIGHT |
                 Astal.WindowAnchor.TOP
             }
-            application={app}
-            class="run-window"
             exclusivity={Astal.Exclusivity.IGNORE}
             keymode={Astal.Keymode.EXCLUSIVE}
             layer={Astal.Layer.OVERLAY}
-            name="run"
             {...props}
             $={(self) => {
                 self.connect("notify::visible", () => {
@@ -84,6 +81,6 @@ export default function Run(props: Partial<JSX.IntrinsicElements["window"]>) {
                     </scrolledwindow>
                 </box>
             </box>
-        </window>
+        </Layer>
     );
 }

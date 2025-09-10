@@ -10,37 +10,33 @@ import Media from "../bar/Media";
 import Network from "../bar/Network";
 import Notifications from "../bar/Notifications";
 import Workspaces from "../bar/Workspaces";
-import { accessor } from "../lib/state";
+import ButtonGroup from "../widgets/ButtonGroup";
+import Layer, { type LayerProps } from "../widgets/Layer";
 
-export default function Bar(
-    props: Partial<Omit<JSX.IntrinsicElements["window"], "gdkmonitor">> &
-        Required<Pick<JSX.IntrinsicElements["window"], "gdkmonitor">>,
-) {
+export default function Bar(props: LayerProps) {
     return (
-        <window
+        <Layer
             anchor={
-                Astal.WindowAnchor.BOTTOM |
                 Astal.WindowAnchor.LEFT |
-                Astal.WindowAnchor.RIGHT
+                Astal.WindowAnchor.RIGHT |
+                Astal.WindowAnchor.TOP
             }
+            canFocus={false}
             exclusivity={Astal.Exclusivity.EXCLUSIVE}
-            marginBottom={16}
-            marginLeft={16}
-            marginRight={16}
-            marginTop={0}
-            name={accessor(props.gdkmonitor).as(
-                (monitor) => `bar-${monitor.model}`,
-            )}
             {...props}
         >
-            <centerbox class="bar">
-                <box $type="start" halign={Gtk.Align.START}>
-                    <Workspaces />
-                </box>
+            <centerbox>
+                <Workspaces $type="start" halign={Gtk.Align.START} />
                 <box $type="center">
                     <ActiveWindow />
                 </box>
-                <box $type="end" halign={Gtk.Align.END} spacing={4}>
+                <ButtonGroup
+                    $type="end"
+                    halign={Gtk.Align.END}
+                    size="extra-small"
+                    type="connected"
+                    variant="tonal"
+                >
                     <Media />
                     <Audio />
                     <Brightness />
@@ -49,8 +45,8 @@ export default function Bar(
                     <Battery />
                     <Notifications />
                     <Clock />
-                </box>
+                </ButtonGroup>
             </centerbox>
-        </window>
+        </Layer>
     );
 }
