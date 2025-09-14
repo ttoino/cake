@@ -25,6 +25,10 @@
         --state-layer-opacity: 10%;
     }
 
+    &:hover:focus {
+        --state-layer-opacity: 18%;
+    }
+
     &:active {
         animation: forwards 0.3s state-layer-ripple;
     }

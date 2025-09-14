@@ -1,8 +1,5 @@
-@use "theme/catppuccin" as cp;
-
-.popups {
+window.popups {
     background: transparent;
-    color: cp.$text;
 
     & > * {
         min-width: 360px;

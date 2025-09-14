@@ -1,0 +1,50 @@
+@use "sass:list";
+
+@use "mixins/gap" as *;
+
+@use "theme/catppuccin" as *;
+
+$_rainbow: (
+    $blue,
+    $sapphire,
+    $teal,
+    $green,
+    $yellow,
+    $peach,
+    $red,
+    $pink,
+    $mauve,
+    $lavender
+);
+
+window.bar {
+    background-color: #000;
+
+    > * {
+        @include gap(16px);
+
+        padding: 8px 16px;
+    }
+
+    .battery {
+        font-variation-settings:
+            "PGRS" var(--battery),
+            "FILL" calc(round(var(--battery) / 100));
+    }
+
+    @for $i from 1 through list.length($_rainbow) {
+        .workspace:nth-child(#{$i}) {
+            --primary: #{list.nth($_rainbow, $i)};
+        }
+    }
+}
+
+// #clock {
+//     background-color: transparent;
+//     border-radius: 10000px;
+//     color: cp.$text;
+//     min-width: 0;
+//     font-size: 20px;
+//     padding: 0 8px;
+//     min-height: 32px;
+// }

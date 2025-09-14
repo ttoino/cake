@@ -1,0 +1,5 @@
+@use "theme/color" as *;
+
+window.scrim {
+    background-color: color-mix(in oklab, $scrim 32%, transparent);
+}

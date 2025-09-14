@@ -14,7 +14,10 @@ const Sidebar = ({ gdkmonitor }: Pick<LayerProps, "gdkmonitor">) => (
         transitionType={Gtk.RevealerTransitionType.SLIDE_LEFT}
     >
         <scrolledwindow>
-            <stack visibleChildName={currentRoute.as((c) => c ?? "")}>
+            <stack
+                transitionType={Gtk.StackTransitionType.CROSSFADE}
+                visibleChildName={currentRoute.as((c) => c ?? "")}
+            >
                 {entries(ROUTES).map(([name, Route]) => (
                     <Route $type="named" name={name} />
                 ))}

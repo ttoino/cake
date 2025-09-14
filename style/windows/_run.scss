@@ -1,0 +1,15 @@
+@use "mixins/elevation" as *;
+
+@use "theme/color" as *;
+
+window.run {
+    .run-prompt {
+        @include elevation(5);
+
+        padding: 8px;
+        min-width: 480px;
+        min-height: 480px;
+        background-color: $surface;
+        border-radius: 24px;
+    }
+}

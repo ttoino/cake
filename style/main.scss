@@ -12,14 +12,14 @@
 @use "./widgets/device.scss";
 @use "./widgets/notification.scss";
 
-@use "./windows/bar.scss";
+@use "windows/bar";
 @use "./windows/calendar.scss";
 @use "windows/main";
 @use "./windows/media.scss";
-@use "./windows/popups.scss";
-@use "./windows/power.scss";
-@use "./windows/run.scss";
-@use "./windows/scrim.scss";
+@use "windows/popups";
+@use "windows/power";
+@use "windows/run";
+@use "windows/scrim";
 
 * {
     all: unset;

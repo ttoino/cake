@@ -1,0 +1,12 @@
+@use "mixins/elevation" as *;
+@use "theme/color" as *;
+
+window.power {
+    .power-controls {
+        @include elevation(3);
+
+        background-color: $surface;
+        padding: 16px;
+        border-radius: 999999px;
+    }
+}
