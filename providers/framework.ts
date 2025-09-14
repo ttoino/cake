@@ -1,6 +1,5 @@
 import { monitorFile, readFile } from "ags/file";
-import { getter, register } from "ags/gobject";
-import GObject from "gi://GObject?version=2.0";
+import { getter, Object, register } from "ags/gobject";
 
 const privacyPath = "/sys/devices/platform/framework_laptop/framework_privacy";
 const privacyPattern = /\[(\w+)\]\s+\[(\w+)\]/;
@@ -9,8 +8,9 @@ const batteryChargeLimitPath =
     "/sys/class/power_supply/BAT1/charge_control_end_threshold";
 
 @register()
-export default class Framework extends GObject.Object {
+export default class Framework extends Object {
     static instance: Framework;
+
     @getter(Number)
     get batteryChargeLimit() {
         return this.#batteryChargeLimit;
@@ -41,6 +41,7 @@ export default class Framework extends GObject.Object {
         monitorFile(batteryChargeLimitPath, this.#updateBatteryChargeLimit);
     }
 
+    // TODO: Return null if files don't exist
     static get_default(): Framework {
         if (!this.instance) this.instance = new Framework();
         return this.instance;

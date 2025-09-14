@@ -1,0 +1,20 @@
+.icon {
+    --progress: 0;
+    --fill: 0;
+    --weight: 400;
+    --grade: 0;
+    --optical-size: 24;
+
+    font-family:
+        "Meterial Symbols", "Material Symbols Outlined", "Material Design Icons";
+    font-size: 24px;
+    line-height: 1;
+    font-variation-settings:
+        "PGRS" var(--progress),
+        "FILL" var(--fill),
+        "wght" var(--weight),
+        "GRAD" var(--grade),
+        "opsz" var(--optical-size);
+
+    transition: font-variation-settings 300ms;
+}

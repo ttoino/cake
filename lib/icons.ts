@@ -1,16 +1,5 @@
 import * as chars from "./chars";
 
-export const batteryIcons = [
-    chars.BATTERY_0_BAR,
-    chars.BATTERY_1_BAR,
-    chars.BATTERY_2_BAR,
-    chars.BATTERY_3_BAR,
-    chars.BATTERY_4_BAR,
-    chars.BATTERY_5_BAR,
-    chars.BATTERY_6_BAR,
-    chars.BATTERY_FULL,
-] as const;
-
 export const batteryChargingIcons = [
     chars.BATTERY_CHARGING_FULL,
     chars.BATTERY_CHARGING_20,
@@ -26,20 +15,6 @@ export const brightnessIcons = [
     chars.BRIGHTNESS_5,
     chars.BRIGHTNESS_6,
     chars.BRIGHTNESS_7,
-] as const;
-
-export const volumeIcons = [
-    chars.VOLUME_MUTE,
-    chars.VOLUME_DOWN,
-    chars.VOLUME_UP,
-] as const;
-
-export const wifiIcons = [
-    chars.SIGNAL_WIFI_0_BAR,
-    chars.NETWORK_WIFI_1_BAR,
-    chars.NETWORK_WIFI_2_BAR,
-    chars.NETWORK_WIFI_3_BAR,
-    chars.SIGNAL_WIFI_4_BAR,
 ] as const;
 
 export const bluetoothIcons = {
@@ -66,16 +41,11 @@ export const iconRange = (icons: readonly string[], value: number) => {
     return icons[index];
 };
 
-export const batteryRange = (charging: boolean, percent: number) =>
-    iconRange(charging ? batteryChargingIcons : batteryIcons, percent);
+export const batteryChargingRange = (percent: number) =>
+    iconRange(batteryChargingIcons, percent);
 
 export const brightnessRange = (brightness: number) =>
     iconRange(brightnessIcons, brightness);
-
-export const volumeRange = (volume: number) => iconRange(volumeIcons, volume);
-
-export const wifiRange = (strength: number) =>
-    iconRange(wifiIcons, strength / 100);
 
 export const bluetoothIcon = <F extends string | undefined>(
     icon: string,

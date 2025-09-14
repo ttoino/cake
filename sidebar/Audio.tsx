@@ -1,4 +1,4 @@
-import { Accessor, createBinding, createComputed, For } from "ags";
+import { Accessor, createBinding, For } from "ags";
 import { Gtk } from "ags/gtk4";
 import Wp from "gi://AstalWp";
 
@@ -7,29 +7,21 @@ import {
     CHEVRON_UP,
     MIC,
     MIC_OFF,
-    VOLUME_MUTE,
+    NO_SOUND,
+    VOLUME,
 } from "../lib/chars";
-import { volumeRange } from "../lib/icons";
 import { createDefaultBinding } from "../lib/state";
 import Button from "../widgets/Button";
 import IconButton from "../widgets/IconButton";
-import IconSlider from "../widgets/IconSlider";
 import ScrollText from "../widgets/ScrollText";
 import ToggleIconButton from "../widgets/ToggleIconButton";
 
 const audio = Wp.get_default()?.audio;
 
-const VolumeSlider = ({
-    device,
-    isSpeaker,
-}: {
-    device: Wp.Endpoint;
-    isSpeaker: boolean;
-}) => (
-    <IconSlider
+const VolumeSlider = ({ device }: { device: Wp.Endpoint }) => (
+    <slider
         drawValue={false}
         hexpand
-        icon={isSpeaker ? createBinding(device, "volume").as(volumeRange) : MIC}
         onNotifyValue={({ value }) => (device.volume = value)}
         step={5}
         value={createBinding(device, "volume")}
@@ -45,18 +37,11 @@ const MuteButton = ({
 }) => (
     <ToggleIconButton
         active={createBinding(device, "mute")}
-        label={createComputed(
-            [createBinding(device, "mute"), createBinding(device, "volume")],
-            (mute, volume) =>
-                isSpeaker
-                    ? mute
-                        ? VOLUME_MUTE
-                        : volumeRange(volume)
-                    : mute
-                      ? MIC_OFF
-                      : MIC,
+        label={createBinding(device, "mute").as((mute) =>
+            isSpeaker ? (mute ? NO_SOUND : VOLUME) : mute ? MIC_OFF : MIC,
         )}
         onToggled={({ active }) => device.set_mute(active)}
+        progress={createBinding(device, "volume").as((volume) => volume * 100)}
         valign={Gtk.Align.CENTER}
         vexpand={false}
     />
@@ -119,10 +104,7 @@ const Device = ({
                     )}
                 />
                 <box spacing={8}>
-                    <VolumeSlider
-                        device={selectedDevice}
-                        isSpeaker={isSpeaker}
-                    />
+                    <VolumeSlider device={selectedDevice} />
                     <MuteButton device={selectedDevice} isSpeaker={isSpeaker} />
                 </box>
             </box>

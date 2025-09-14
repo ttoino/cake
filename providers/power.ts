@@ -1,9 +1,8 @@
-import { register } from "ags/gobject";
+import { Object, register } from "ags/gobject";
 import { exec } from "ags/process";
-import GObject from "gi://GObject?version=2.0";
 
 @register()
-export default class Power extends GObject.Object {
+export default class Power extends Object {
     static instance: Power;
     static get_default(): Power {
         if (!this.instance) this.instance = new Power();

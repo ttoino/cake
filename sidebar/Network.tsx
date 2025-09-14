@@ -2,7 +2,7 @@ import { createBinding, createComputed, For } from "ags";
 import { Gtk } from "ags/gtk4";
 import NetworkService from "gi://AstalNetwork";
 
-import { wifiRange } from "../lib/icons";
+import { NETWORK_WIFI } from "../lib/chars";
 import { ascending, descending } from "../lib/sorting";
 import Device from "../widgets/Device";
 
@@ -44,7 +44,7 @@ const AccessPoint = (ap: NetworkService.AccessPoint) => {
                 (active, state) =>
                     active && state === NetworkService.DeviceState.ACTIVATED,
             )}
-            icon={createBinding(ap, "strength").as(wifiRange)}
+            icon={NETWORK_WIFI}
             title={createBinding(ap, "ssid")}
         />
     );

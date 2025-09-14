@@ -1,7 +1,7 @@
 import app from "ags/gtk4/app";
 import Wp from "gi://AstalWp";
 
-import { volumeRange } from "../../lib/icons";
+import { VOLUME } from "../../lib/chars";
 import { notify } from "../../lib/notifications";
 
 const audio = Wp.get_default();
@@ -18,7 +18,7 @@ audio?.defaultSpeaker.connect(
             hideHeader: true,
             id: speakerId,
             slider: {
-                icon: volumeRange(speaker.volume),
+                icon: VOLUME,
                 value: speaker.volume * 100,
             },
             title: "Volume",

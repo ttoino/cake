@@ -5,6 +5,7 @@
 @use "components/button";
 @use "components/button_group";
 @use "./components/entry.scss";
+@use "components/icon";
 @use "components/slider";
 @use "components/switch";
 @use "components/tooltip";
@@ -75,13 +76,6 @@ window.background {
     > * {
         min-width: 360px;
     }
-}
-
-.icon {
-    font-size: 24px;
-    font-family:
-        "Meterial Symbols", "Material Symbols Outlined", "Material Design Icons";
-    line-height: 1;
 }
 
 .secondary {

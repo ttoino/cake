@@ -3,7 +3,8 @@ import { Gtk } from "ags/gtk4";
 import BatteryService from "gi://AstalBattery";
 import PowerProfiles from "gi://AstalPowerProfiles";
 
-import { batteryRange } from "../lib/icons";
+import { BATTERY } from "../lib/chars";
+import { batteryChargingRange } from "../lib/icons";
 import ButtonGroup from "../widgets/ButtonGroup";
 import IconSlider from "../widgets/IconSlider";
 import ToggleButton from "../widgets/ToggleButton";
@@ -13,7 +14,7 @@ const powerProfiles = PowerProfiles.get_default();
 
 const icon = createComputed(
     [createBinding(battery, "charging"), createBinding(battery, "percentage")],
-    (charging, percent) => batteryRange(charging, percent),
+    (charging, percent) => (charging ? batteryChargingRange(percent) : BATTERY),
 );
 
 const BatterySlider = () => (

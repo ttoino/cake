@@ -16,14 +16,7 @@ export const SELECT_WINDOW = "\ue6fa";
 export const KEEP = "\ue6aa";
 
 // Battery
-export const BATTERY_0_BAR = "\uebdc";
-export const BATTERY_1_BAR = "\uebd9";
-export const BATTERY_2_BAR = "\uebe0";
-export const BATTERY_3_BAR = "\uebdd";
-export const BATTERY_4_BAR = "\uebe2";
-export const BATTERY_5_BAR = "\uebd4";
-export const BATTERY_6_BAR = "\uebd2";
-export const BATTERY_FULL = "\ue1a4";
+export const BATTERY = "\u{ff000}";
 export const BATTERY_CHARGING_20 = "\uf0a2";
 export const BATTERY_CHARGING_30 = "\uf0a3";
 export const BATTERY_CHARGING_50 = "\uf0a4";
@@ -79,20 +72,15 @@ export const RADIO_BUTTON_UNCHECKED = "\ue836";
 
 // Audio
 export const NO_SOUND = "\ue710";
-export const VOLUME_MUTE = "\ue04e";
-export const VOLUME_DOWN = "\ue04d";
-export const VOLUME_UP = "\ue050";
+export const VOLUME = "\u{ff003}";
 export const MIC = "\ue029";
 export const MIC_OFF = "\ue02b";
 
 // Network
 export const WEB_OFF = "󰪎";
 export const LAN = "\ueb2f";
-export const SIGNAL_WIFI_0_BAR = "\uf0b0";
-export const NETWORK_WIFI_1_BAR = "\uebe4";
-export const NETWORK_WIFI_2_BAR = "\uebd6";
-export const NETWORK_WIFI_3_BAR = "\uebe1";
-export const SIGNAL_WIFI_4_BAR = "\ue1d8";
+export const NETWORK_CELL = "\u{ff001}";
+export const NETWORK_WIFI = "\u{ff002}";
 // TODO: Locked versions
 
 // Power

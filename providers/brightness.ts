@@ -1,12 +1,11 @@
 import { monitorFile, readFile } from "ags/file";
-import { getter, register, setter } from "ags/gobject";
+import { getter, Object, register, setter } from "ags/gobject";
 import { exec } from "ags/process";
-import GObject from "gi://GObject?version=2.0";
 
 const get = (args: string) => exec(`brightnessctl -m ${args}`);
 
 @register()
-export default class Brightness extends GObject.Object {
+export default class Brightness extends Object {
     static instance: Brightness;
     @getter(Number)
     get percentage() {

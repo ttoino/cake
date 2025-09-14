@@ -1,10 +1,9 @@
-import { register, signal } from "ags/gobject";
+import { Object, register, signal } from "ags/gobject";
 import { execAsync } from "ags/process";
 import { interval } from "ags/time";
-import GObject from "gi://GObject?version=2.0";
 
 @register()
-export default class Calendar extends GObject.Object {
+export default class Calendar extends Object {
     static instance: Calendar;
     private _events: Map<string, Event> = new Map();
 

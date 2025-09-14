@@ -1,10 +1,9 @@
-import { getter, register, setter, signal } from "ags/gobject";
+import { getter, Object, register, setter, signal } from "ags/gobject";
 import { timeout, Timer } from "ags/time";
 import Notifd from "gi://AstalNotifd";
-import GObject from "gi://GObject?version=2.0";
 
 @register()
-export default class Notifications extends GObject.Object {
+export default class Notifications extends Object {
     static instance: Notifications;
     // Getters
     get all() {

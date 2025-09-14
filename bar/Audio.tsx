@@ -1,21 +1,19 @@
 import { createBinding, createComputed } from "ags";
 import Wp from "gi://AstalWp";
 
-import { NO_SOUND, SEPARATOR } from "../lib/chars";
-import { volumeRange } from "../lib/icons";
+import { NO_SOUND, SEPARATOR, VOLUME } from "../lib/chars";
 import SidebarIconButton, { SidebarIconButtonProps } from "./SidebarIconButton";
 
 const audio = Wp.get_default();
 
 const icon =
     audio &&
-    createComputed(
-        [
-            createBinding(audio.defaultSpeaker, "mute"),
-            createBinding(audio.defaultSpeaker, "volume"),
-        ],
-        (mute, volume) => (mute ? NO_SOUND : volumeRange(volume)),
+    createBinding(audio.defaultSpeaker, "mute").as((mute) =>
+        mute ? NO_SOUND : VOLUME,
     );
+const progres =
+    audio &&
+    createBinding(audio.defaultSpeaker, "volume").as((volume) => volume * 100);
 const tooltip =
     audio &&
     createComputed(
@@ -40,6 +38,7 @@ export default function Audio(props: Omit<SidebarIconButtonProps, "route">) {
         <SidebarIconButton
             class="audio"
             label={icon}
+            progress={progres}
             route="audio"
             tooltipText={tooltip}
             {...props}

@@ -1,15 +1,18 @@
 import { createBinding, createComputed } from "ags";
 import BatteryService from "gi://AstalBattery";
 
-import { SEPARATOR } from "../lib/chars";
-import { batteryRange } from "../lib/icons";
+import { BATTERY, SEPARATOR } from "../lib/chars";
+import { batteryChargingRange } from "../lib/icons";
 import SidebarIconButton, { SidebarIconButtonProps } from "./SidebarIconButton";
 
 const battery = BatteryService.get_default();
 
 const icon = createComputed(
     [createBinding(battery, "charging"), createBinding(battery, "percentage")],
-    (charging, percent) => batteryRange(charging, percent),
+    (charging, percent) => (charging ? batteryChargingRange(percent) : BATTERY),
+);
+const progress = createBinding(battery, "percentage").as(
+    (percent) => percent * 100,
 );
 const tooltip = createComputed(
     [createBinding(battery, "charging"), createBinding(battery, "percentage")],
@@ -26,10 +29,8 @@ export default function Battery(props: Omit<SidebarIconButtonProps, "route">) {
     return (
         <SidebarIconButton
             class="battery"
-            css={`
-                --battery: ${battery.percentage * 100};
-            `}
             label={icon}
+            progress={progress}
             route="system"
             tooltipText={tooltip}
             {...props}
