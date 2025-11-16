@@ -44,7 +44,7 @@
         nativeBuildInputs = with pkgs; [
           ags.packages.${system}.default
           gobject-introspection
-          wrapGAppsHook
+          wrapGAppsHook3
         ];
 
         buildInputs = extraPackages ++ [ pkgs.gjs ];
