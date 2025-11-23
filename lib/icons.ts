@@ -1,16 +1,5 @@
 import * as chars from "./chars";
 
-export const batteryChargingIcons = [
-    chars.BATTERY_CHARGING_FULL,
-    chars.BATTERY_CHARGING_20,
-    chars.BATTERY_CHARGING_30,
-    chars.BATTERY_CHARGING_50,
-    chars.BATTERY_CHARGING_60,
-    chars.BATTERY_CHARGING_80,
-    chars.BATTERY_CHARGING_90,
-    chars.BATTERY_CHARGING_FULL,
-] as const;
-
 export const brightnessIcons = [
     chars.BRIGHTNESS_5,
     chars.BRIGHTNESS_6,
@@ -40,9 +29,6 @@ export const iconRange = (icons: readonly string[], value: number) => {
     );
     return icons[index];
 };
-
-export const batteryChargingRange = (percent: number) =>
-    iconRange(batteryChargingIcons, percent);
 
 export const brightnessRange = (brightness: number) =>
     iconRange(brightnessIcons, brightness);

@@ -1,15 +1,13 @@
 import { createBinding, createComputed } from "ags";
 import BatteryService from "gi://AstalBattery";
 
-import { BATTERY, SEPARATOR } from "../lib/chars";
-import { batteryChargingRange } from "../lib/icons";
+import { BATTERY, BATTERY_CHARGING, SEPARATOR } from "../lib/chars";
 import SidebarIconButton, { SidebarIconButtonProps } from "./SidebarIconButton";
 
 const battery = BatteryService.get_default();
 
-const icon = createComputed(
-    [createBinding(battery, "charging"), createBinding(battery, "percentage")],
-    (charging, percent) => (charging ? batteryChargingRange(percent) : BATTERY),
+const icon = createBinding(battery, "charging").as((charging) =>
+    charging ? BATTERY_CHARGING : BATTERY,
 );
 const progress = createBinding(battery, "percentage").as(
     (percent) => percent * 100,

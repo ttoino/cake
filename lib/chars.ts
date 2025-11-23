@@ -17,13 +17,7 @@ export const KEEP = "\ue6aa";
 
 // Battery
 export const BATTERY = "\u{ff000}";
-export const BATTERY_CHARGING_20 = "\uf0a2";
-export const BATTERY_CHARGING_30 = "\uf0a3";
-export const BATTERY_CHARGING_50 = "\uf0a4";
-export const BATTERY_CHARGING_60 = "\uf0a5";
-export const BATTERY_CHARGING_80 = "\uf0a6";
-export const BATTERY_CHARGING_90 = "\uf0a7";
-export const BATTERY_CHARGING_FULL = "\ue1a3";
+export const BATTERY_CHARGING = "\u{ff004}";
 
 // Notifications
 export const NOTIFICATIONS = "\ue7f4";
