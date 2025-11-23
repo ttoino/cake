@@ -1,10 +1,12 @@
-import { createBinding, createComputed, For } from "ags";
+import { createBinding, createComputed } from "ags";
 import { Gtk } from "ags/gtk4";
 import NetworkService from "gi://AstalNetwork";
 
 import { NETWORK_WIFI } from "../lib/chars";
 import { ascending, descending } from "../lib/sorting";
-import Device from "../widgets/Device";
+import Icon from "../widgets/Icon";
+import List from "../widgets/List";
+import ListItem from "../widgets/ListItem";
 
 const network = NetworkService.get_default();
 
@@ -27,42 +29,31 @@ const Ethernet = () =>
         </box>
     );
 
-const AccessPoint = (ap: NetworkService.AccessPoint) => {
-    const isActive = createBinding(network.wifi, "activeAccessPoint").as(
-        (active) => active === ap,
-    );
-
-    return (
-        <Device
-            activating={createComputed(
-                [isActive, createBinding(network.wifi, "state")],
-                (active, state) =>
-                    active && state !== NetworkService.DeviceState.ACTIVATED,
-            )}
-            active={createComputed(
-                [isActive, createBinding(network.wifi, "state")],
-                (active, state) =>
-                    active && state === NetworkService.DeviceState.ACTIVATED,
-            )}
-            icon={NETWORK_WIFI}
-            title={createBinding(ap, "ssid")}
-        />
-    );
-};
+const AccessPoint = (ap: NetworkService.AccessPoint) => (
+    <ListItem
+        headline={createBinding(ap, "ssid")}
+        leading={
+            <Icon
+                label={NETWORK_WIFI}
+                progress={createBinding(ap, "strength")}
+            />
+        }
+        supportingText={createComputed(
+            [
+                createBinding(network.wifi, "activeAccessPoint"),
+                createBinding(network.wifi, "state"),
+            ],
+            (activeAP, state) =>
+                activeAP !== ap
+                    ? ""
+                    : state === NetworkService.DeviceState.ACTIVATED
+                      ? "Connected"
+                      : "Connecting...",
+        )}
+    />
+);
 
 const Wifi = () => {
-    const aps = createBinding(network.wifi, "accessPoints").as((aps) =>
-        aps.toSorted(
-            (a, b) =>
-                descending(
-                    a === network.wifi.activeAccessPoint,
-                    b === network.wifi.activeAccessPoint,
-                ) ||
-                descending(a.strength, b.strength) ||
-                ascending(a.ssid ?? "", b.ssid ?? ""),
-        ),
-    );
-
     return (
         <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
             <box spacing={16}>
@@ -78,7 +69,19 @@ const Wifi = () => {
                 />
             </box>
             <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
-                <For each={aps}>{AccessPoint}</For>
+                <List
+                    items={createBinding(network.wifi, "accessPoints")}
+                    itemType={NetworkService.AccessPoint.$gtype}
+                    renderer={AccessPoint}
+                    sort={(a, b) =>
+                        descending(
+                            a === network.wifi.activeAccessPoint,
+                            b === network.wifi.activeAccessPoint,
+                        ) ||
+                        descending(a.strength, b.strength) ||
+                        ascending(a.ssid ?? "", b.ssid ?? "")
+                    }
+                />
             </box>
         </box>
     );

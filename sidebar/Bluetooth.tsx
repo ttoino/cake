@@ -1,42 +1,32 @@
-import { createBinding, For } from "ags";
+import { createBinding } from "ags";
 import { Gtk } from "ags/gtk4";
 import BluetoothService from "gi://AstalBluetooth";
 
 import { BLUETOOTH } from "../lib/chars";
 import { bluetoothIcon } from "../lib/icons";
 import { ascending, descending } from "../lib/sorting";
-import BaseDevice from "../widgets/Device";
+import Icon from "../widgets/Icon";
+import List from "../widgets/List";
+import ListItem from "../widgets/ListItem";
 
 const bluetooth = BluetoothService.get_default();
 
 const Device = (device: BluetoothService.Device) => (
-    <BaseDevice
-        activating={createBinding(device, "connecting")}
-        active={createBinding(device, "connected")}
-        icon={createBinding(device, "icon").as((icon) =>
-            bluetoothIcon(icon, BLUETOOTH),
-        )}
-        iconTooltip={createBinding(device, "icon")}
-        onPrimaryClick={() =>
-            device.connected
-                ? device.disconnect_device(null)
-                : device.connect_device(null)
+    <ListItem
+        headline={createBinding(device, "name")}
+        leading={
+            <Icon
+                label={createBinding(device, "icon").as((icon) =>
+                    bluetoothIcon(icon, BLUETOOTH),
+                )}
+                tooltipText={createBinding(device, "icon")}
+            />
         }
-        subtitle={createBinding(device, "address")}
-        title={createBinding(device, "name")}
+        supportingText={createBinding(device, "address")}
     />
 );
 
 const Bluetooth = (props: JSX.IntrinsicElements["box"]) => {
-    const devices = createBinding(bluetooth, "devices").as((devices) =>
-        devices.toSorted(
-            (a, b) =>
-                descending(a.connected, b.connected) ||
-                descending(a.paired, b.paired) ||
-                ascending(a.name ?? a.address ?? "", b.name ?? b.address ?? ""),
-        ),
-    );
-
     return (
         <box orientation={Gtk.Orientation.VERTICAL} spacing={8} {...props}>
             <box spacing={16}>
@@ -55,7 +45,19 @@ const Bluetooth = (props: JSX.IntrinsicElements["box"]) => {
                 />
             </box>
             <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
-                <For each={devices}>{Device}</For>
+                <List
+                    items={createBinding(bluetooth, "devices")}
+                    itemType={BluetoothService.Device.$gtype}
+                    renderer={Device}
+                    sort={(a, b) =>
+                        descending(a.connected, b.connected) ||
+                        descending(a.paired, b.paired) ||
+                        ascending(
+                            a.name ?? a.address ?? "",
+                            b.name ?? b.address ?? "",
+                        )
+                    }
+                />
             </box>
         </box>
     );
