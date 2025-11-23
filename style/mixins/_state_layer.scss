@@ -1,6 +1,9 @@
 @mixin state-layer {
     --state-layer-opacity: 0%;
 
+    transition-duration: 0.3s;
+    transition-property: background-image;
+
     background-image: radial-gradient(
         circle,
         color-mix(

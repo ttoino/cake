@@ -1,0 +1,15 @@
+@use "theme/color" as *;
+
+separator {
+    background-color: $outline-variant;
+
+    &.horizontal {
+        margin: 8px 0;
+        min-height: 1px;
+    }
+
+    &.vertical {
+        margin: 0 8px;
+        min-width: 1px;
+    }
+}

@@ -4,8 +4,10 @@
 
 @use "components/button";
 @use "components/button_group";
-@use "./components/entry.scss";
+@use "components/entry";
 @use "components/icon";
+@use "components/list_item";
+@use "components/separator";
 @use "components/slider";
 @use "components/switch";
 @use "components/tooltip";

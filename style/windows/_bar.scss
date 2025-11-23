@@ -26,25 +26,9 @@ window.bar {
         padding: 8px 16px;
     }
 
-    .battery {
-        font-variation-settings:
-            "PGRS" var(--battery),
-            "FILL" calc(round(var(--battery) / 100));
-    }
-
     @for $i from 1 through list.length($_rainbow) {
         .workspace:nth-child(#{$i}) {
             --primary: #{list.nth($_rainbow, $i)};
         }
     }
 }
-
-// #clock {
-//     background-color: transparent;
-//     border-radius: 10000px;
-//     color: cp.$text;
-//     min-width: 0;
-//     font-size: 20px;
-//     padding: 0 8px;
-//     min-height: 32px;
-// }

@@ -1,0 +1,82 @@
+@use "sass:color";
+
+@use "mixins/border" as *;
+@use "mixins/elevation" as *;
+@use "mixins/state_layer" as *;
+@use "mixins/typography" as *;
+
+@use "theme/color" as *;
+@use "theme/shape" as *;
+
+entry {
+    min-height: 56px;
+
+    transition-duration: 0.3s;
+
+    text {
+        @include typography(body-large);
+
+        color: $on-surface;
+        padding: 0 16px;
+
+        placeholder {
+            color: $on-surface-variant;
+        }
+    }
+
+    image {
+        -gtk-icon-size: 24px;
+
+        min-height: 24px;
+        min-width: 24px;
+    }
+
+    &:not(.search) {
+        @include border;
+
+        --border-color: #{$outline};
+        --border-width: 1px;
+
+        border-radius: $radius-extra-small;
+        caret-color: $primary;
+
+        transition-property: box-shadow;
+
+        &:hover {
+            --border-color: #{$on-surface};
+        }
+
+        &:focus-within {
+            --border-color: #{$primary};
+            --border-width: 3px;
+        }
+
+        image {
+            &.left {
+                margin-left: 12px;
+            }
+            &.right {
+                margin-right: 12px;
+            }
+        }
+    }
+
+    &.search {
+        @include elevation(3);
+        @include state-layer;
+
+        background-color: $surface-container-high;
+        border-radius: 28px;
+
+        transition-property: background;
+
+        image {
+            &:first-child {
+                margin-left: 16px;
+            }
+            &:last-child {
+                margin-right: 16px;
+            }
+        }
+    }
+}

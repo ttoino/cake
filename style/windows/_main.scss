@@ -6,9 +6,7 @@ window.main {
     .corners {
         background-color: transparent;
         border-radius: 32px;
-        box-shadow:
-            black 0 0 0 100px,
-            inset #{$elevation5} inset;
+        box-shadow: black 0 0 0 100px;
     }
 
     revealer.sidebar {

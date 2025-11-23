@@ -6,10 +6,19 @@ window.run {
     .run-prompt {
         @include elevation(5);
 
-        padding: 8px;
         min-width: 480px;
-        min-height: 480px;
+        min-height: 720px;
         background-color: $surface;
         border-radius: 24px;
+
+        entry {
+            background-color: transparent;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        separator {
+            margin: 0;
+        }
     }
 }

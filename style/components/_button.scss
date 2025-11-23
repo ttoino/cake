@@ -2,6 +2,7 @@
 @use "sass:selector";
 @use "sass:string";
 
+@use "mixins/border" as *;
 @use "mixins/elevation" as *;
 @use "mixins/state_layer" as *;
 @use "mixins/typography" as *;
@@ -28,8 +29,7 @@ button {
     @include state-layer;
 
     transition-property:
-        background-color, background-image, border-color, border-radius, color,
-        box-shadow;
+        background-color, background-image, border-radius, color, box-shadow;
     transition-duration: 0.3s;
 
     @include group-default(".elevated") {
@@ -65,14 +65,15 @@ button {
     }
 
     @include group-default(".outlined") {
-        border-style: solid;
-        border-color: $outline-variant;
+        @include border;
+
+        --border-color: #{$outline-variant};
         color: $on-surface-variant;
 
         &.toggle:checked {
+            --border-width: 0;
             background-color: $inverse-surface;
             color: $inverse-on-surface;
-            border-width: 0;
         }
     }
 
@@ -83,8 +84,8 @@ button {
     @include group-default(".extra-small") {
         @include typography(label-large);
 
+        --border-width: 1px;
         border-radius: 16px;
-        border-width: 1px;
         min-height: 32px;
         padding: 0 12px;
 
@@ -101,8 +102,8 @@ button {
     @include group-default(".small", $default: true) {
         @include typography(label-large);
 
+        --border-width: 1px;
         border-radius: 20px;
-        border-width: 1px;
         min-height: 40px;
         padding: 0 16px;
 
@@ -119,8 +120,8 @@ button {
     @include group-default(".medium") {
         @include typography(title-medium);
 
+        --border-width: 1px;
         border-radius: 28px;
-        border-width: 1px;
         min-height: 56px;
         padding: 0 24px;
 
@@ -137,8 +138,8 @@ button {
     @include group-default(".large") {
         @include typography(headline-small);
 
+        --border-width: 2px;
         border-radius: 48px;
-        border-width: 2px;
         min-height: 96px;
         padding: 0 48px;
 
@@ -155,8 +156,8 @@ button {
     @include group-default(".extra-large") {
         @include typography(headline-large);
 
+        --border-width: 3px;
         border-radius: 68px;
-        border-width: 3px;
         min-height: 136px;
         padding: 0 64px;
 
@@ -172,6 +173,10 @@ button {
 
     &.icon {
         line-height: 1;
+
+        transition-property:
+            background-color, background-image, border-radius, color,
+            box-shadow, font-variation-settings;
 
         @include group-default(".filled") {
             color: $on-primary;
