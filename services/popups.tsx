@@ -5,7 +5,7 @@ import Layer from "../widgets/Layer";
 import Power from "../windows/Power";
 import Run from "../windows/Run";
 
-const POPUPS = { power: Power, run: Run } as const satisfies Record<
+export const POPUPS = { power: Power, run: Run } as const satisfies Record<
     string,
     typeof Layer
 >;

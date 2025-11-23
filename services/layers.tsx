@@ -3,7 +3,6 @@ import { Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 
 import { entries } from "../lib/objects";
-import Layer from "../widgets/Layer";
 import Bar from "../windows/Bar";
 import Main from "../windows/Main";
 import Popups from "../windows/Popups";
@@ -14,7 +13,7 @@ export const LAYERS = {
     main: Main,
     popups: Popups,
     scrim: Scrim,
-} as const satisfies Record<string, typeof Layer>;
+} as const;
 
 export type LayerName = keyof typeof LAYERS;
 

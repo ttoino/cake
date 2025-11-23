@@ -69,7 +69,7 @@ export default class Notifications extends Object {
         for (const id of this._stored) this.dismiss(id);
     }
 
-    @signal([Number])
+    @signal(Number)
     dismissed(id: number) {
         this._popups.delete(id);
         this._timeouts.get(id)?.cancel();
@@ -82,7 +82,7 @@ export default class Notifications extends Object {
     }
 
     // Signals
-    @signal([Number])
+    @signal(Number)
     notified(id: number) {
         this._timeouts.get(id)?.cancel();
 
@@ -97,12 +97,12 @@ export default class Notifications extends Object {
         );
     }
 
-    @signal([Number])
+    @signal(Number)
     stored(id: number) {
         this._stored.add(id);
     }
 
-    @signal([Number])
+    @signal(Number)
     timedOut(id: number) {
         this._popups.delete(id);
         this._timeouts.delete(id);
@@ -110,11 +110,13 @@ export default class Notifications extends Object {
 
     // Signal handlers
     #onNotified(id: number, replaced: boolean) {
+        const og = this._notifd.get_notification(id);
+
+        if (!og) return;
+
         console.debug(`Notification ${id} notified (replaced: ${replaced})`);
 
-        const notification = new Notification(
-            this._notifd.get_notification(id),
-        );
+        const notification = new Notification(og);
         this._notifications.set(id, notification);
 
         if (replaced) {

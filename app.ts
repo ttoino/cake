@@ -21,10 +21,10 @@ app.start({
                         popups.dismissPopup();
                         return res("Dismissed popups");
                     case "show":
-                        popups.showPopup(popup);
+                        popups.showPopup(popup as popups.PopupName);
                         return res(`Showed ${popup}`);
                     case "toggle":
-                        popups.togglePopup(popup);
+                        popups.togglePopup(popup as popups.PopupName);
                         return res(`Toggled ${popup}`);
                 }
                 return res("Invalid popup action");
