@@ -89,8 +89,11 @@ export default function Power(props: LayerProps) {
                         dismissPopup();
                         action?.action();
                     }
+
+                    if (key === Gdk.KEY_Escape) dismissPopup();
                 }}
             />
+            <Gtk.GestureClick onPressed={dismissPopup} />
 
             <box halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER}>
                 <ButtonGroup
