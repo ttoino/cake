@@ -76,15 +76,11 @@ export default class Calendar extends Object {
         return this.instance;
     }
 
-    @signal([String], undefined, {
-        default: false,
-    })
+    @signal(String)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     eventAdded(id: string) {}
 
-    @signal([String], undefined, {
-        default: false,
-    })
+    @signal(String)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     eventRemoved(id: string) {}
 }
