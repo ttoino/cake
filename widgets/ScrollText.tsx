@@ -1,7 +1,8 @@
 import { Gtk } from "ags/gtk4";
 
 export interface ScrollTextProps
-    extends Omit<JSX.IntrinsicElements["scrolledwindow"], "children">,
+    extends
+        Omit<JSX.IntrinsicElements["scrolledwindow"], "children">,
         Pick<JSX.IntrinsicElements["label"], "label"> {
     labelProps?: Omit<JSX.IntrinsicElements["label"], "children">;
 }

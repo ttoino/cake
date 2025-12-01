@@ -4,8 +4,9 @@ import Gtk from "gi://Gtk?version=4.0";
 import { CHEVRON_LEFT, CHEVRON_RIGHT } from "../lib/chars";
 import IconButton from "./IconButton";
 
-export interface ExpandableWindowProps
-    extends Partial<Omit<JSX.IntrinsicElements["stack"], "children">> {
+export interface ExpandableWindowProps extends Partial<
+    Omit<JSX.IntrinsicElements["stack"], "children">
+> {
     collapsed: JSX.Element;
     expanded: (props: {
         $type: "named";
