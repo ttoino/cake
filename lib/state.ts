@@ -12,7 +12,7 @@ export const createArrayBinding = <
     V,
 >(
     object: T,
-    property: Extract<P, string>,
+    property: Exclude<Extract<P, string>, "$signals">,
     mapFn: (value: T[P] extends (infer V)[] ? V : never) => Accessor<V>,
 ): Accessor<V[]> =>
     flatAccessor(
@@ -28,7 +28,7 @@ export const createBooleanBinding = <
     P extends keyof T,
 >(
     object: T,
-    property: Extract<P, string>,
+    property: Exclude<Extract<P, string>, "$signals">,
 ): Accessor<boolean> => createBinding(object, property).as((value) => !!value);
 
 export const createDefaultBinding = <
@@ -36,7 +36,7 @@ export const createDefaultBinding = <
     P extends keyof T,
 >(
     object: T,
-    property: Extract<P, string>,
+    property: Exclude<Extract<P, string>, "$signals">,
     value: Exclude<T[P], null | undefined>,
 ): Accessor<Exclude<T[P], null | undefined>> =>
     createBinding(object, property).as((v) => v ?? value) as Accessor<
